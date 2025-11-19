@@ -1,0 +1,88 @@
+<!-- pos-cadastro.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pós Cadastro | Aican</title>
+    <link rel="stylesheet" href="styles/pos-cadastro.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-box">
+        <div class="logo-container">
+          <img src="../assets/logo.aican.png" alt="Logo Aican" class="logo" />
+        </div>
+
+        <h2>Pós Cadastro - Informações</h2>
+
+        <form id="posCadastroForm">
+          <div class="input-group">
+            <label for="nome">Nome e Sobrenome</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
+
+          <div class="input-group">
+            <label for="sexo">Sexo</label>
+            <select id="sexo" name="sexo" required>
+              <option value="">Selecione...</option>
+              <option value="masculino">Masculino</option>
+              <option value="feminino">Feminino</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="peso">Peso (kg)</label>
+            <input type="number" id="peso" name="peso" required />
+          </div>
+
+          <div class="input-group">
+            <label for="altura">Altura (cm)</label>
+            <input type="number" id="altura" name="altura" required />
+          </div>
+
+          <div class="input-group">
+            <label for="idade">Idade</label>
+            <input type="number" id="idade" name="idade" required />
+          </div>
+
+          <div class="input-group">
+            <label for="objetivo">Objetivo</label>
+            <select id="objetivo" name="objetivo" required>
+              <option value="">Selecione...</option>
+              <option value="ganhar">Ganhar Peso</option>
+              <option value="perder">Perder Peso</option>
+              <option value="hipertrofia">Hipertrofia</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="frequencia">Frequência semanal</label>
+            <input
+              type="number"
+              id="frequencia"
+              name="frequencia"
+              placeholder="Ex: 3 vezes"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="localidade">Localidade</label>
+            <select id="localidade" name="localidade" required>
+              <option value="">Selecione...</option>
+              <option value="casa">Em casa</option>
+              <option value="academia">Academia</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-submit">
+            Gerar Lista de Exercícios
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="../scripts/pos-cadastro.js"></script>
+  </body>
+</html>
