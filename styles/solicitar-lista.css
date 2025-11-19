@@ -1,8 +1,24 @@
+/* Remove setas no Chrome, Safari, Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove setas no Firefox e outros navegadores modernos */
+input[type="number"] {
+  appearance: textfield;
+}
+
 :root {
   --cor-texto: #008fcb;
 }
 
 body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* remove qualquer scroll */
   font-family: "Poppins", sans-serif;
   background-color: #000;
   color: #fff;
@@ -12,12 +28,25 @@ body {
   justify-content: center;
 }
 
+/* Vídeo de fundo */
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.1;
+  filter: brightness(1.3);
+}
+
 .container {
   width: 90%;
   max-width: 600px;
   background-color: #111;
   border-radius: 16px;
-  padding: 40px;
+  padding: 19px 30px;
 }
 
 .form-box {
@@ -27,11 +56,11 @@ body {
 }
 
 .logo-container {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .logo {
-  width: 200px;
+  width: 250px;
 }
 
 h2 {
@@ -51,6 +80,7 @@ h2 {
   margin-bottom: 8px;
   color: var(--cor-texto);
   font-weight: 500;
+  font-size: 16px;
 }
 
 .input-group input,
@@ -63,6 +93,7 @@ h2 {
   color: #fff;
   outline: none;
   transition: border 0.3s;
+  box-sizing: border-box;
 }
 
 .input-group input:focus,
@@ -84,4 +115,11 @@ h2 {
 
 .btn-submit:hover {
   background-color: #0278aa;
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow: auto; /* permite scroll no mobile */
+    padding: 20px;
+  }
 }

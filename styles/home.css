@@ -1,0 +1,148 @@
+:root {
+  --cor-texto: #008fcb;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #000;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Vídeo de fundo */
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.1;
+  filter: brightness(1.3);
+}
+
+/* Container principal */
+.home-container {
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  max-width: 600px;
+  background-color: #111;
+  border-radius: 16px;
+  padding: 60px 40px;
+  text-align: center;
+}
+
+/* Box interna */
+.home-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo */
+.logo {
+  width: 270px;
+  margin-bottom: 20px;
+}
+
+/* Título e descrição */
+h2 {
+  margin-bottom: 20px;
+  color: var(--cor-texto);
+  font-weight: 700;
+}
+
+.descricao {
+  font-size: 18px;
+  margin-bottom: 30px;
+  line-height: 1.4;
+  opacity: 1;
+  transition: opacity 0.8s ease-in-out;
+
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.descricao .fade-out {
+  opacity: 0;
+}
+
+.descricao .fade-out {
+  opacity: 1;
+}
+
+/* Botão principal */
+.btn-home {
+  padding: 14px 30px;
+  background-color: var(--cor-texto);
+  border: none;
+  border-radius: 8px;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-bottom: 20px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.btn-home:hover {
+  background-color: #0278aa;
+}
+
+/* Link de ajuda */
+.link-ajuda {
+  color: #4d4d4d;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.link-ajuda:hover {
+  color: #015477;
+  text-decoration: underline;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .home-container {
+    flex-direction: column;
+    padding: 30px;
+  }
+
+  .logo {
+    width: 220px;
+  }
+
+  h2 {
+    font-size: 23px;
+  }
+  .descricao {
+    font-size: 14px;
+    height: 60px;
+  }
+
+  .btn-home {
+    font-size: 12px;
+  }
+
+  .link-ajuda {
+    font-size: 13px;
+  }
+}
