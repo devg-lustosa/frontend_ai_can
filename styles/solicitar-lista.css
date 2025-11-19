@@ -1,24 +1,25 @@
-/* Remove setas no Chrome, Safari, Edge */
+/* Reset de inputs numéricos */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Remove setas no Firefox e outros navegadores modernos */
 input[type="number"] {
   appearance: textfield;
 }
 
+/* Variáveis globais */
 :root {
   --cor-texto: #008fcb;
 }
 
+/* Corpo da página */
 body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* remove qualquer scroll */
+  overflow: hidden;
   font-family: "Poppins", sans-serif;
   background-color: #000;
   color: #fff;
@@ -41,20 +42,25 @@ body {
   filter: brightness(1.3);
 }
 
+/* Container principal com scroll interno */
 .container {
   width: 90%;
   max-width: 600px;
   background-color: #111;
   border-radius: 16px;
   padding: 19px 30px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
+/* Box de conteúdo */
 .form-box {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* Logo */
 .logo-container {
   margin-bottom: 5px;
 }
@@ -63,6 +69,7 @@ body {
   width: 250px;
 }
 
+/* Títulos */
 h2 {
   margin-bottom: 16px;
   color: var(--cor-texto);
@@ -70,6 +77,14 @@ h2 {
   text-align: center;
 }
 
+h3 {
+  color: var(--cor-texto);
+  font-size: 18px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+/* Inputs e selects */
 .input-group {
   width: 100%;
   margin-bottom: 20px;
@@ -101,6 +116,7 @@ h2 {
   border: 1px solid var(--cor-texto);
 }
 
+/* Botão */
 .btn-submit {
   width: 100%;
   padding: 14px;
@@ -117,9 +133,75 @@ h2 {
   background-color: #0278aa;
 }
 
+/* Loading */
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.circular-loader {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #333;
+  border-top: 6px solid var(--cor-texto);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Estilo da lista de treinos e receitas */
+.treino-titulo {
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 20px;
+  color: #fff;
+}
+
+.exercicio {
+  margin-bottom: 12px;
+  line-height: 1.5;
+  font-size: 15px;
+  color: #ddd;
+}
+
+.exercicio strong {
+  color: var(--cor-texto);
+}
+
+.exercicio a {
+  color: var(--cor-texto);
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.receita p {
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: #ccc;
+}
+
+.receita strong {
+  color: var(--cor-texto);
+}
+
+/* Responsividade */
 @media (max-width: 768px) {
   body {
-    overflow: auto; /* permite scroll no mobile */
+    overflow: auto;
     padding: 20px;
   }
 }

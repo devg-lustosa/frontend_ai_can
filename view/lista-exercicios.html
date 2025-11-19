@@ -1,18 +1,34 @@
-<!-- lista-exercicios.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lista de Exercícios | Aican</title>
+    <title>Carregando | AICAN</title>
     <link rel="stylesheet" href="../styles/lista.css" />
   </head>
   <body>
-    <div class="container">
-      <h2>Plano de Treino</h2>
-      <div id="treino"></div>
-    </div>
+    <!-- Vídeo de fundo -->
+    <video autoplay muted loop playsinline class="bg-video">
+      <source src="../assets/gym.fundo.mp4" type="video/mp4" />
+      Seu navegador não suporta vídeo HTML5
+    </video>
+    <div class="video-overlay"></div>
 
+    <div class="container">
+      <div class="form-box">
+        <div class="logo-container">
+          <img src="../assets/logo.aican.png" alt="Logo Aican" class="logo" />
+        </div>
+
+        <h2>Preparando seu treino...</h2>
+
+        <!-- Bolinha de progresso circular -->
+        <div class="loading-content">
+          <div class="circular-loader"></div>
+          <p class="loading-text">Aguarde alguns instantes</p>
+        </div>
+      </div>
+    </div>
     <script src="../scripts/lista.js"></script>
   </body>
 </html>

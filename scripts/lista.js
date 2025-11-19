@@ -1,178 +1,374 @@
-// Classe PlanoTreino
-class PlanoTreino {
-  constructor(usuario) {
-    this.usuario = usuario;
-  }
-
-  // Método que gera treinos simulados
-  gerarTreino() {
-    return {
-      A: {
-        exercicios: [
-          {
-            exercicio: "Supino reto",
-            url: "https://www.youtube.com/watch?v=example1",
-            serie: "4x10",
-          },
-          {
-            exercicio: "Supino inclinado",
-            url: "https://www.youtube.com/watch?v=example2",
-            serie: "3x12",
-          },
-          {
-            exercicio: "Crucifixo",
-            url: "https://www.youtube.com/watch?v=example3",
-            serie: "3x12",
-          },
-          {
-            exercicio: "Tríceps pulley",
-            url: "https://www.youtube.com/watch?v=example4",
-            serie: "3x12",
-          },
-          {
-            exercicio: "Tríceps francês",
-            url: "https://www.youtube.com/watch?v=example5",
-            serie: "3x10",
-          },
-          {
-            exercicio: "Flexão de braço",
-            url: "https://www.youtube.com/watch?v=example6",
-            serie: "3x15",
-          },
-        ],
-        preTreino: {
-          nome: "Cafeína + Creatina",
-          receita: "Café preto + 5g creatina",
+// Simulação: JSON que você me mandou
+const dados = {
+  dias_de_treino: [
+    {
+      exercicios: [
+        {
+          descanso_segundos: 90,
+          detalhes_execucao:
+            "Deite-se no banco plano, pegue a barra com as mãos afastadas na largura dos ombros e realize a extensão dos braços",
+          nome: "Supino Reto com Barra",
+          repeticoes: "8-10",
+          series: "4",
+          video_url:
+            "https://www.youtube.com/results?search_query=Supino+Reto+com+Barra",
         },
-        posTreino: {
-          nome: "Whey + Banana",
-          receita: "Shake de whey com banana",
+        {
+          descanso_segundos: 75,
+          detalhes_execucao:
+            "Deite-se no banco inclinado, segure um halter em cada mão e empurre para cima com controle",
+          nome: "Supino Inclinado com Halteres",
+          repeticoes: "10-12",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Supino+Inclinado+com+Halteres",
         },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Abra os braços em arco com os halteres, mantendo leve flexão nos cotovelos",
+          nome: "Crucifixo com Halteres",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Crucifixo+com+Halteres",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Com os cotovelos fixos ao lado do corpo, puxe a corda para baixo até estender os braços",
+          nome: "Tríceps Corda no Pulley",
+          repeticoes: "12-15",
+          series: "4",
+          video_url:
+            "https://www.youtube.com/results?search_query=Tríceps+Corda+no+Pulley",
+        },
+        {
+          descanso_segundos: 75,
+          detalhes_execucao:
+            "Deite-se no banco e desça a barra em direção à testa, mantendo os cotovelos próximos à cabeça",
+          nome: "Tríceps Testa com Barra W",
+          repeticoes: "10-12",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Tríceps+Testa+com+Barra+W",
+        },
+      ],
+      foco_muscular: "Peito e Tríceps",
+      identificacao: "Treino A - Segunda",
+    },
+    {
+      exercicios: [
+        {
+          descanso_segundos: 90,
+          detalhes_execucao:
+            "Puxe o corpo até o queixo passar da barra, mantendo o core contraído",
+          nome: "Barra Fixa com Pegada Pronada",
+          repeticoes: "8-10",
+          series: "4",
+          video_url:
+            "https://www.youtube.com/results?search_query=Barra+Fixa+com+Pegada+Pronada",
+        },
+        {
+          descanso_segundos: 75,
+          detalhes_execucao:
+            "Incline o tronco para frente, mantenha as costas retas e puxe a barra em direção ao abdômen",
+          nome: "Remada Curvada com Barra",
+          repeticoes: "10-12",
+          series: "4",
+          video_url:
+            "https://www.youtube.com/results?search_query=Remada+Curvada+com+Barra",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Puxe a barra até o peito com as mãos próximas uma da outra",
+          nome: "Puxada Alta com Pegada Fechada",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Puxada+Alta+com+Pegada+Fechada",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Levante a barra com os braços, contraindo o bíceps ao subir",
+          nome: "Rosca Direta com Barra",
+          repeticoes: "10-12",
+          series: "4",
+          video_url:
+            "https://www.youtube.com/results?search_query=Rosca+Direta+com+Barra",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Levante um braço de cada vez, mantendo o cotovelo fixo ao lado do corpo",
+          nome: "Rosca Alternada com Halteres",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Rosca+Alternada+com+Halteres",
+        },
+      ],
+      foco_muscular: "Costas e Bíceps",
+      identificacao: "Treino B - Terça",
+    },
+    {
+      exercicios: [
+        {
+          descanso_segundos: 120,
+          detalhes_execucao:
+            "Posicione a barra nos ombros, desça com controle até os joelhos formarem 90°",
+          nome: "Agachamento com Barra",
+          repeticoes: "8-10",
+          series: "5",
+          video_url:
+            "https://www.youtube.com/results?search_query=Agachamento+com+Barra",
+        },
+        {
+          descanso_segundos: 90,
+          detalhes_execucao:
+            "Empurre a plataforma com os pés, sem tirar as costas do encosto",
+          nome: "Leg Press 45°",
+          repeticoes: "10-12",
+          series: "4",
+          video_url:
+            "https://www.youtube.com/results?search_query=Leg+Press+45°",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Flexione os joelhos para levantar o peso, contraindo os isquiotibiais",
+          nome: "Cadeira Flexora",
+          repeticoes: "12-15",
+          series: "4",
+          video_url:
+            "https://www.youtube.com/results?search_query=Cadeira+Flexora",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Estenda as pernas até a completa contração do quadríceps",
+          nome: "Cadeira Extensora",
+          repeticoes: "15-20",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Cadeira+Extensora",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Suba na ponta dos pés com os joelhos levemente flexionados",
+          nome: "Elevação de Panturrilha em Pé",
+          repeticoes: "15-20",
+          series: "4",
+          video_url:
+            "https://www.youtube.com/results?search_query=Elevação+de+Panturrilha+em+Pé",
+        },
+      ],
+      foco_muscular: "Pernas",
+      identificacao: "Treino C - Quinta",
+    },
+    {
+      exercicios: [
+        {
+          descanso_segundos: 90,
+          detalhes_execucao:
+            "Levante a barra da frente dos ombros até a extensão total dos braços",
+          nome: "Desenvolvimento com Barra",
+          repeticoes: "8-10",
+          series: "4",
+          video_url:
+            "https://www.youtube.com/results?search_query=Desenvolvimento+com+Barra",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Levante os halteres lateralmente até a altura dos ombros",
+          nome: "Elevação Lateral com Halteres",
+          repeticoes: "12-15",
+          series: "4",
+          video_url:
+            "https://www.youtube.com/results?search_query=Elevação+Lateral+com+Halteres",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Levante a barra da frente até a altura dos ombros",
+          nome: "Elevação Frontal com Barra",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Elevação+Frontal+com+Barra",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Com os halteres, levante os braços lateralmente com os cotovelos elevados",
+          nome: "Remada Alta com Halteres",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Remada+Alta+com+Halteres",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Mantenha o corpo alinhado e levante um braço de cada vez",
+          nome: "Prancha com Elevação Alternada",
+          repeticoes: "30-45 segundos",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Prancha+com+Elevação+Alternada",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Realize o movimento com controle, segurando um peso no peito",
+          nome: "Crunch com Peso",
+          repeticoes: "15-20",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Crunch+com+Peso",
+        },
+      ],
+      foco_muscular: "Ombros e Abdômen",
+      identificacao: "Treino D - Sexta",
+    },
+  ],
+  nome_da_rotina: "Divisão ABCD",
+  sugestoes_nutricionais: {
+    pos_treino: {
+      opcao_economica: {
+        custo_estimado: "Baixo",
+        explicacao:
+          "Fonte rápida de proteína e carboidrato, prática e acessível para recuperação pós-treino",
+        ingredientes: ["atum em lata", "pão integral", "maionese light"],
+        link_receita:
+          "https://www.google.com/search?q=receita+sanduíche+de+atum+com+pão+integral",
+        nome: "Sanduíche de Atum com Pão Integral",
       },
-      B: {
-        exercicios: [
-          {
-            exercicio: "Agachamento livre",
-            url: "https://www.youtube.com/watch?v=example7",
-            serie: "4x8",
-          },
-          {
-            exercicio: "Leg press",
-            url: "https://www.youtube.com/watch?v=example8",
-            serie: "4x12",
-          },
-          {
-            exercicio: "Avanço",
-            url: "https://www.youtube.com/watch?v=example9",
-            serie: "3x12",
-          },
-          {
-            exercicio: "Levantamento terra",
-            url: "https://www.youtube.com/watch?v=example10",
-            serie: "4x6",
-          },
-          {
-            exercicio: "Glúteo 4 apoios",
-            url: "https://www.youtube.com/watch?v=example11",
-            serie: "3x15",
-          },
-          {
-            exercicio: "Abdominal supra",
-            url: "https://www.youtube.com/watch?v=example12",
-            serie: "3x20",
-          },
-        ],
-        preTreino: {
-          nome: "Pré-treino cafeinado",
-          receita: "Suplemento pré-treino + água",
-        },
-        posTreino: {
-          nome: "Batata doce + Frango",
-          receita: "150g batata doce + 100g frango",
-        },
+      opcao_equilibrada: {
+        custo_estimado: "Médio",
+        explicacao:
+          "Boa relação de proteína e carboidrato para recuperação muscular com custo moderado",
+        ingredientes: ["ovos inteiros", "pão integral", "tomate"],
+        link_receita:
+          "https://www.google.com/search?q=receita+omelete+de+ovo+inteiro+com+pão+integral",
+        nome: "Omelete de Ovo Inteiro com Pão Integral",
       },
-      C: {
-        exercicios: [
-          {
-            exercicio: "Barra fixa",
-            url: "https://www.youtube.com/watch?v=example13",
-            serie: "3x8",
-          },
-          {
-            exercicio: "Remada curvada",
-            url: "https://www.youtube.com/watch?v=example14",
-            serie: "4x10",
-          },
-          {
-            exercicio: "Rosca direta",
-            url: "https://www.youtube.com/watch?v=example15",
-            serie: "3x12",
-          },
-          {
-            exercicio: "Rosca alternada",
-            url: "https://www.youtube.com/watch?v=example16",
-            serie: "3x12",
-          },
-          {
-            exercicio: "Desenvolvimento ombro",
-            url: "https://www.youtube.com/watch?v=example17",
-            serie: "4x10",
-          },
-          {
-            exercicio: "Elevação lateral",
-            url: "https://www.youtube.com/watch?v=example18",
-            serie: "3x15",
-          },
+      opcao_premium: {
+        custo_estimado: "Alto",
+        explicacao:
+          "Refeição completa com proteína de alto valor biológico e carboidrato de baixo índice glicêmico para recuperação rápida",
+        ingredientes: [
+          "peito de frango",
+          "batata doce",
+          "brócolis",
+          "azeite de oliva",
         ],
-        preTreino: {
-          nome: "Beta-alanina + Creatina",
-          receita: "Suplemento beta-alanina + 5g creatina",
-        },
-        posTreino: {
-          nome: "Whey isolado + Aveia",
-          receita: "Shake de whey isolado + 30g aveia",
-        },
+        link_receita:
+          "https://www.google.com/search?q=receita+frango+grelhado+com+batata+doce+e+brócolis",
+        nome: "Frango Grelhado com Batata Doce e Brócolis",
       },
-    };
-  }
+    },
+    pre_treino: {
+      opcao_economica: {
+        custo_estimado: "Baixo",
+        explicacao:
+          "Fonte acessível de carboidratos e gorduras boas para gerar energia antes do treino",
+        ingredientes: ["pão integral", "manteiga de amendoim"],
+        link_receita:
+          "https://www.google.com/search?q=receita+pão+integral+com+manteiga+de+amendoim",
+        nome: "Pão Integral com Manteiga de Amendoim",
+      },
+      opcao_equilibrada: {
+        custo_estimado: "Médio",
+        explicacao:
+          "Fornece carboidratos complexos e simples, além de proteína, para bom desempenho no treino",
+        ingredientes: ["aveia", "banana", "leite desnatado", "mel"],
+        link_receita:
+          "https://www.google.com/search?q=receita+aveia+com+banana+e+leite+desnatado",
+        nome: "Aveia com Banana e Leite Desnatado",
+      },
+      opcao_premium: {
+        custo_estimado: "Alto",
+        explicacao:
+          "Combina proteína magra, gorduras saudáveis e fibras para energia sustentada e recuperação muscular",
+        ingredientes: [
+          "claras de ovo",
+          "espinafre",
+          "abacate",
+          "azeite de oliva",
+        ],
+        link_receita:
+          "https://www.google.com/search?q=receita+omelete+de+claras+com+espinafre+e+abacate",
+        nome: "Omelete de Claras com Espinafre e Abacate",
+      },
+    },
+  },
+};
 
-  // Método que monta HTML
-  gerarHTML() {
-    const treinos = this.gerarTreino();
-    let html = `<h3>Plano de Treino para ${this.usuario.nome}</h3>`;
-    html += `<p><strong>Objetivo:</strong> ${this.usuario.objetivo}</p>`;
-    html += `<hr>`;
+function mostrarLista() {
+  const box = document.querySelector(".form-box");
+  box.innerHTML = `
+    <div class="logo-container">
+      <img src="../assets/logo.aican.png" alt="Logo Aican" class="logo" />
+    </div>
+    <h2>${dados.nome_da_rotina}</h2>
+  `;
 
-    for (const [dia, bloco] of Object.entries(treinos)) {
-      html += `<div class="treino-dia"><h3>Treino ${dia}</h3><ul>`;
-      bloco.exercicios.forEach((ex, i) => {
-        html += `
-        <li>
-          <strong>${i + 1}. ${ex.exercicio}</strong> 
-          (<a href="${
-            ex.url
-          }" target="_blank" style="color:var(--cor-texto)">vídeo</a>)<br>
-          Série/Repetição: ${ex.serie}
-        </li>
-      `;
-      });
-      html += `</ul>
-      <p><strong>Pré-treino:</strong> ${bloco.preTreino.nome} - Receita: ${bloco.preTreino.receita}</p>
-      <p><strong>Pós-treino:</strong> ${bloco.posTreino.nome} - Receita: ${bloco.posTreino.receita}</p>
-    </div>`;
-    }
+  // Renderizar treinos
+  dados.dias_de_treino.forEach((treino) => {
+    const treinoDiv = document.createElement("div");
+    treinoDiv.innerHTML = `
+      <h3>${treino.identificacao} - ${treino.foco_muscular}</h3>
+      ${treino.exercicios
+        .map(
+          (ex) => `
+        <div class="exercicio">
+          <strong>${ex.nome}</strong>
+          Séries: ${ex.series} | Repetições: ${ex.repeticoes} | Descanso: ${ex.descanso_segundos}s<br>
+          <small>${ex.detalhes_execucao}</small><br>
+          <a href="${ex.video_url}" target="_blank">Ver vídeo</a>
+        </div>
+      `
+        )
+        .join("")}
+    `;
+    box.appendChild(treinoDiv);
+  });
 
-    return html;
-  }
+  // Renderizar receitas
+  const receitasDiv = document.createElement("div");
+  receitasDiv.classList.add("receita");
+  receitasDiv.innerHTML = `
+    <h3>Receitas Pré-Treino</h3>
+    ${Object.values(dados.sugestoes_nutricionais.pre_treino)
+      .map(
+        (r) => `
+      <h4>${r.nome} (${r.custo_estimado})</h4>
+      <p>Ingredientes: ${r.ingredientes.join(", ")}</p>
+      <p><small>${r.explicacao}</small><br>
+      <a href="${r.link_receita}" target="_blank">Ver receita</a></p>
+    `
+      )
+      .join("")}
+
+    <h3>Receitas Pós-Treino</h3>
+    ${Object.values(dados.sugestoes_nutricionais.pos_treino)
+      .map(
+        (r) => `
+      <h4>${r.nome} (${r.custo_estimado})</h4>
+      <p>Ingredientes: ${r.ingredientes.join(", ")}</p>
+      <p><small>${r.explicacao}</small><br>
+      <a href="${r.link_receita}" target="_blank">Ver receita</a></p>
+    `
+      )
+      .join("")}
+  `;
+  box.appendChild(receitasDiv);
 }
 
-// Recupera usuário do localStorage
-const usuarioData = localStorage.getItem("usuario");
-if (usuarioData) {
-  const usuario = JSON.parse(usuarioData);
-  const plano = new PlanoTreino(usuario);
-  document.getElementById("treino").innerHTML = plano.gerarHTML();
-} else {
-  document.getElementById("treino").innerHTML =
-    "<p style='color:#ff4d4d'>Nenhum usuário encontrado. Volte ao cadastro.</p>";
-}
+// Simular carregamento (ex: 2 segundos)
+setTimeout(mostrarLista, 2000);

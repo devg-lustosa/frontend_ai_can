@@ -7,7 +7,7 @@
     <title>Solicitar Lista | AICAN</title>
     <link rel="stylesheet" href="../styles/solicitar-lista.css" />
   </head>
-  <body>
+  <body class="form-page">
     <!-- Vídeo de fundo -->
     <video autoplay muted loop playsinline class="bg-video">
       <source src="../assets/gym.fundo.mp4" type="video/mp4" />
@@ -77,11 +77,12 @@
             </select>
           </div>
 
-          <button type="submit" class="btn-submit">
+          <button type="button" class="btn-submit" onclick="irParaLoading()">
             Gerar Lista de Exercícios
           </button>
         </form>
       </div>
     </div>
+    <script src="../scripts/functions.js"></script>
   </body>
 </html>
