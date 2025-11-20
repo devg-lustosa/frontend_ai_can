@@ -69,6 +69,27 @@ body {
   width: 250px;
 }
 
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #111;
+  border-radius: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #008fcb;
+  border-radius: 8px;
+  border: 2px solid #111;
+}
+
+/* Firefox */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: #008fcb #111;
+}
+
 /* Títulos */
 h2 {
   margin-bottom: 16px;
@@ -88,6 +109,8 @@ h3 {
 .input-group {
   width: 100%;
   margin-bottom: 20px;
+  position: relative;
+  min-height: 90px;
 }
 
 .input-group label {
@@ -127,6 +150,16 @@ h3 {
   font-weight: bold;
   cursor: pointer;
   transition: background 0.3s;
+}
+
+/* Mensagens de erro */
+.error-message {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
 .btn-submit:hover {

@@ -311,64 +311,97 @@ const dados = {
 
 function mostrarLista() {
   const box = document.querySelector(".form-box");
-  box.innerHTML = `
-    <div class="logo-container">
-      <img src="../assets/logo.aican.png" alt="Logo Aican" class="logo" />
-    </div>
-    <h2>${dados.nome_da_rotina}</h2>
-  `;
+  const titulo = document.getElementById("tituloLista");
+  const loading = document.getElementById("loading");
+  const conteudo = document.getElementById("conteudoLista");
 
-  // Renderizar treinos
-  dados.dias_de_treino.forEach((treino) => {
-    const treinoDiv = document.createElement("div");
-    treinoDiv.innerHTML = `
-      <h3>${treino.identificacao} - ${treino.foco_muscular}</h3>
-      ${treino.exercicios
+  // Esconder loading, mostrar conteúdo
+  titulo.innerText = dados.nome_da_rotina;
+  loading.style.display = "none";
+  conteudo.style.display = "block";
+
+  // Renderizar cards de dias de treino
+  const diasContainer = document.getElementById("diasTreino");
+  dados.dias_de_treino.forEach((treino, index) => {
+    const card = document.createElement("div");
+    card.classList.add("treino-card");
+    card.innerHTML = `${treino.identificacao}<br><span>${treino.foco_muscular}</span>`;
+    card.onclick = () => mostrarTreino(index);
+    diasContainer.appendChild(card);
+  });
+
+  // Mostrar primeiro treino por padrão
+  mostrarTreino(0);
+
+  // Renderizar receitas
+  const receitasDiv = document.getElementById("receitas");
+  receitasDiv.classList.add("receita");
+
+  receitasDiv.innerHTML = `
+    <div class="receita-bloco">
+      <h3 class="receita-tipo">Receitas Pré-Treino</h3>
+      ${Object.values(dados.sugestoes_nutricionais.pre_treino)
         .map(
-          (ex) => `
-        <div class="exercicio">
-          <strong>${ex.nome}</strong>
-          Séries: ${ex.series} | Repetições: ${ex.repeticoes} | Descanso: ${ex.descanso_segundos}s<br>
-          <small>${ex.detalhes_execucao}</small><br>
-          <a href="${ex.video_url}" target="_blank">Ver vídeo</a>
+          (r) => `
+        <div class="receita-card">
+          <h4>${r.nome} (${r.custo_estimado})</h4>
+          <ul>
+            ${r.ingredientes.map((ing) => `<li>${ing}</li>`).join("")}
+          </ul>
+          <p>${r.explicacao}</p>
+          <a href="${r.link_receita}" target="_blank">Ver receita</a>
         </div>
       `
         )
         .join("")}
-    `;
-    box.appendChild(treinoDiv);
-  });
+    </div>
 
-  // Renderizar receitas
-  const receitasDiv = document.createElement("div");
-  receitasDiv.classList.add("receita");
-  receitasDiv.innerHTML = `
-    <h3>Receitas Pré-Treino</h3>
-    ${Object.values(dados.sugestoes_nutricionais.pre_treino)
-      .map(
-        (r) => `
-      <h4>${r.nome} (${r.custo_estimado})</h4>
-      <p>Ingredientes: ${r.ingredientes.join(", ")}</p>
-      <p><small>${r.explicacao}</small><br>
-      <a href="${r.link_receita}" target="_blank">Ver receita</a></p>
-    `
-      )
-      .join("")}
+    <div class="receita-bloco">
+      <h3 class="receita-tipo">Receitas Pós-Treino</h3>
+      ${Object.values(dados.sugestoes_nutricionais.pos_treino)
+        .map(
+          (r) => `
+        <div class="receita-card">
+          <h4>${r.nome} (${r.custo_estimado})</h4>
+          <ul>
+            ${r.ingredientes.map((ing) => `<li>${ing}</li>`).join("")}
+          </ul>
+          <p>${r.explicacao}</p>
+          <a href="${r.link_receita}" target="_blank">Ver receita</a>
+        </div>
+      `
+        )
+        .join("")}
+    </div>
+  `;
+}
 
-    <h3>Receitas Pós-Treino</h3>
-    ${Object.values(dados.sugestoes_nutricionais.pos_treino)
+// Mostrar treino detalhado ao clicar
+function mostrarTreino(index) {
+  const treino = dados.dias_de_treino[index];
+  const treinoDiv = document.getElementById("treinoDetalhado");
+
+  treinoDiv.innerHTML = `
+    <h3>${treino.identificacao} - ${treino.foco_muscular}</h3>
+    ${treino.exercicios
       .map(
-        (r) => `
-      <h4>${r.nome} (${r.custo_estimado})</h4>
-      <p>Ingredientes: ${r.ingredientes.join(", ")}</p>
-      <p><small>${r.explicacao}</small><br>
-      <a href="${r.link_receita}" target="_blank">Ver receita</a></p>
+        (ex) => `
+      <div class="exercicio">
+        <strong>${ex.nome}</strong>
+        Séries: ${ex.series} | Repetições: ${ex.repeticoes} | Descanso: ${ex.descanso_segundos}s<br>
+        <small>${ex.detalhes_execucao}</small><br>
+        <a href="${ex.video_url}" target="_blank">Ver vídeo</a>
+      </div>
     `
       )
       .join("")}
   `;
-  box.appendChild(receitasDiv);
 }
 
-// Simular carregamento (ex: 2 segundos)
+// Botão de voltar
+function voltarParaFormulario() {
+  window.location.href = "pos-cadastro.html";
+}
+
+// Simular carregamento
 setTimeout(mostrarLista, 2000);
