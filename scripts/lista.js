@@ -172,6 +172,62 @@ const dados = {
     {
       exercicios: [
         {
+          descanso_segundos: 75,
+          detalhes_execucao:
+            "Sente na máquina, abra as pernas lentamente contra a resistência",
+          nome: "Abdução na Máquina",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Abdução+na+Máquina",
+        },
+        {
+          descanso_segundos: 75,
+          detalhes_execucao:
+            "De pé, com um haltere ou máquina, levante a perna para o lado",
+          nome: "Levantamento Lateral de Perna",
+          repeticoes: "15-20",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Levantamento+Lateral+de+Perna",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Segure a barra próxima ao corpo e levante com força",
+          nome: "Rosca Inversa no Cabo",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Rosca+Inversa+no+Cabo",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Coloque os braços na máquina e puxe em sua direção com força",
+          nome: "Máquina de Remada Sentada",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Máquina+de+Remada+Sentada",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Realize movimentos de abdominal na máquina específica",
+          nome: "Máquina Abdominal",
+          repeticoes: "15-20",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Máquina+Abdominal",
+        },
+      ],
+      foco_muscular: "Glúteos e Costas Leves",
+      identificacao: "Treino E - Quarta",
+    },
+    {
+      exercicios: [
+        {
           descanso_segundos: 90,
           detalhes_execucao:
             "Levante a barra da frente dos ombros até a extensão total dos braços",
@@ -234,6 +290,117 @@ const dados = {
       ],
       foco_muscular: "Ombros e Abdômen",
       identificacao: "Treino D - Sexta",
+    },
+    {
+      exercicios: [
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Deite-se no banco e empurre os halteres para cima com controle",
+          nome: "Supino com Halteres",
+          repeticoes: "10-12",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Supino+com+Halteres",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Puxe a barra em direção ao peito com as mãos afastadas",
+          nome: "Puxada Alta com Pegada Aberta",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Puxada+Alta+com+Pegada+Aberta",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Levante os halteres do chão até a altura dos ombros",
+          nome: "Rosca Martelo com Halteres",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Rosca+Martelo+com+Halteres",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Com os cotovelos fixos, estenda os braços para trás na máquina",
+          nome: "Tríceps na Máquina",
+          repeticoes: "12-15",
+          series: "3",
+          video_url:
+            "https://www.youtube.com/results?search_query=Tríceps+na+Máquina",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Mantenha o corpo reto e realize o movimento em pé",
+          nome: "Rosca Concentrada com Haltere",
+          repeticoes: "12-15",
+          series: "2",
+          video_url:
+            "https://www.youtube.com/results?search_query=Rosca+Concentrada+com+Haltere",
+        },
+      ],
+      foco_muscular: "Peito, Costas e Braços",
+      identificacao: "Treino F - Sábado",
+    },
+    {
+      exercicios: [
+        {
+          descanso_segundos: 45,
+          detalhes_execucao:
+            "Caminhada ou corrida leve para aquecimento e mobilidade",
+          nome: "Caminhada/Corrida Leve",
+          repeticoes: "20-30 minutos",
+          series: "1",
+          video_url:
+            "https://www.youtube.com/results?search_query=Caminhada+Leve+Cardio",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Estique os principais grupos musculares por 30 segundos cada",
+          nome: "Alongamento Estático",
+          repeticoes: "10-15 minutos",
+          series: "1",
+          video_url:
+            "https://www.youtube.com/results?search_query=Alongamento+Estático+Completo",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Movimentos de mobilidade articular para flexibilidade",
+          nome: "Mobilidade Articular",
+          repeticoes: "10 minutos",
+          series: "1",
+          video_url:
+            "https://www.youtube.com/results?search_query=Mobilidade+Articular",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao: "Yoga leve para recuperação e bem-estar mental",
+          nome: "Yoga Leve",
+          repeticoes: "15-20 minutos",
+          series: "1",
+          video_url:
+            "https://www.youtube.com/results?search_query=Yoga+Leve+Recuperação",
+        },
+        {
+          descanso_segundos: 60,
+          detalhes_execucao:
+            "Meditação e respiração profunda para relaxamento total",
+          nome: "Meditação e Respiração",
+          repeticoes: "10 minutos",
+          series: "1",
+          video_url:
+            "https://www.youtube.com/results?search_query=Meditação+Respiração+Profunda",
+        },
+      ],
+      foco_muscular: "Recuperação e Bem-estar",
+      identificacao: "Treino G - Domingo",
     },
   ],
   nome_da_rotina: "Divisão ABCD",
@@ -308,7 +475,6 @@ const dados = {
     },
   },
 };
-
 function mostrarLista() {
   const box = document.querySelector(".form-box");
   const titulo = document.getElementById("tituloLista");
