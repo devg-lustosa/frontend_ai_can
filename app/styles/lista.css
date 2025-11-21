@@ -1,20 +1,24 @@
+/* Variáveis globais */
 :root {
   --cor-texto: #008fcb;
 }
 
+/* Corpo da página */
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
   font-family: "Poppins", sans-serif;
   background-color: #000;
   color: #fff;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Vídeo de fundo */
 .bg-video {
   position: fixed;
   top: 0;
@@ -24,7 +28,7 @@ body {
   object-fit: cover;
   z-index: -1;
   opacity: 0.1;
-  filter: brightness(1.3);
+  filter: brightness(1.2);
 }
 
 .container {
@@ -245,9 +249,11 @@ h3 {
   color: #000;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s;
+  transform: scale(1);
+  transition: background 0.3s, transform 180ms ease-in-out;
 }
 .btn-voltar:hover,
 .btn-pdf:hover {
   background-color: #0278aa;
+  transform: scale(1.08);
 }
