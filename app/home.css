@@ -9,7 +9,7 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #000;
   color: #fff;
   height: 100vh;
@@ -28,7 +28,7 @@ body {
   object-fit: cover;
   z-index: -1;
   opacity: 0.1;
-  filter: brightness(1.1);
+  filter: brightness(1.0);
 }
 
 /* Container principal */
@@ -88,25 +88,68 @@ h2 {
   opacity: 1;
 }
 
-/* Botão principal */
+/* ===== SISTEMA DE BOTÕES PADRONIZADO ===== */
+/* Estilo base para todos os botões */
+button,
+.btn {
+  font-family: 'Roboto', sans-serif;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 180ms ease-in-out, box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  outline: none;
+}
+
+button:focus-visible,
+.btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 143, 203, 0.3);
+}
+
+/* Variante PRIMARY (padrão) */
+.btn,
+.btn-primary,
+button:not([class]) {
+  padding: 12px 20px;
+  background-color: var(--cor-texto);
+  color: #000;
+  font-size: 14px;
+}
+
+.btn:hover,
+.btn-primary:hover,
+button:not([class]):hover {
+  background-color: #0278aa;
+  transform: scale(1.08);
+}
+
+.btn:active,
+.btn-primary:active,
+button:not([class]):active {
+  transform: scale(0.98);
+}
+
+/* Variante HOME */
 .btn-home {
   padding: 14px 30px;
   background-color: var(--cor-texto);
-  border: none;
-  border-radius: 8px;
   color: #000;
   font-weight: 600;
-  cursor: pointer;
-  transform: scale(1);
-  transition: background 0.3s, transform 180ms ease-in-out;
-  margin-bottom: 30px;
-  text-decoration: none;
   font-size: 16px;
+  margin-bottom: 30px;
 }
 
 .btn-home:hover {
   background-color: #0278aa;
   transform: scale(1.08);
+}
+
+.btn-home:active {
+  transform: scale(0.98);
 }
 
 /* Link de ajuda */
@@ -141,7 +184,8 @@ h2 {
   }
 
   .btn-home {
-    font-size: 12px;
+    font-size: 14px;
+    padding: 12px 24px;
   }
 
   .link-ajuda {
