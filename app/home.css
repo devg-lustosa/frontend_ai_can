@@ -12,11 +12,10 @@ body {
   font-family: 'Roboto', sans-serif;
   background-color: #000;
   color: #fff;
-  min-height: 100vh; /* corrigido */
+  height: 100vh;
   display: flex;
-  align-items: flex-start; /* corrigido */
+  align-items: center;
   justify-content: center;
-  padding: 40px 20px; /* corrigido */
 }
 
 /* Vídeo de fundo */
@@ -27,26 +26,14 @@ body {
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  z-index: -2;
+  z-index: -1;
   opacity: 0.1;
   filter: brightness(1.0);
 }
 
-/* Overlay para suavizar o vídeo */
-.video-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: -1;
-}
-
 /* Container principal */
 .home-container {
-  min-height: 450px; /* corrigido */
-  height: auto; /* corrigido */
+  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,6 +89,7 @@ h2 {
 }
 
 /* ===== SISTEMA DE BOTÕES PADRONIZADO ===== */
+/* Estilo base para todos os botões */
 button,
 .btn {
   font-family: 'Roboto', sans-serif;
@@ -122,7 +110,7 @@ button:focus-visible,
   box-shadow: 0 0 0 3px rgba(0, 143, 203, 0.3);
 }
 
-/* Variante PRIMARY */
+/* Variante PRIMARY (padrão) */
 .btn,
 .btn-primary,
 button:not([class]) {
@@ -176,7 +164,7 @@ button:not([class]):active {
   text-decoration: underline;
 }
 
-/* Responsivo geral */
+/* Responsivo */
 @media (max-width: 900px) {
   .home-container {
     flex-direction: column;
@@ -190,7 +178,6 @@ button:not([class]):active {
   h2 {
     font-size: 23px;
   }
-
   .descricao {
     font-size: 14px;
     height: 60px;
@@ -203,55 +190,5 @@ button:not([class]):active {
 
   .link-ajuda {
     font-size: 13px;
-  }
-}
-
-/* Responsivo para tablets e celulares */
-@media (max-width: 600px) {
-  .home-container {
-    padding: 25px;
-    border-radius: 12px;
-  }
-
-  .logo {
-    width: 180px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  .descricao {
-    font-size: 14px;
-    height: auto;
-  }
-
-  .btn-home {
-    width: 100%;
-    padding: 12px 0;
-  }
-}
-
-/* Celulares muito pequenos */
-@media (max-width: 400px) {
-  .home-container {
-    padding: 18px;
-  }
-
-  .logo {
-    width: 150px;
-  }
-
-  h2 {
-    font-size: 18px;
-  }
-
-  .descricao {
-    font-size: 13px;
-  }
-
-  .btn-home {
-    font-size: 13px;
-    padding: 10px 0;
   }
 }
