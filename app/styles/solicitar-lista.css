@@ -150,6 +150,7 @@ h3 {
   font-weight: bold;
   cursor: pointer;
   transition: background 0.3s;
+  transition: transform 0.3s ease;
 }
 
 /* Mensagens de erro */
@@ -163,6 +164,7 @@ h3 {
 }
 
 .btn-submit:hover {
+  scale: (1.1);
   background-color: #0278aa;
 }
 
