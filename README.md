@@ -10,6 +10,7 @@ O objetivo é oferecer uma **experiência de usuário intuitiva** para:
 - 📝 Coleta de informações físicas e preferências (altura, peso, idade, objetivo, disponibilidade)
 - 🎬 Visualização de planos de treino em tempo real com vídeos e instruções
 - 🍽️ Recomendações nutricionais personalizadas (pré-treino e pós-treino)
+- 📄 Geração e visualização de PDFs com planos completos
 - 📱 Interface responsiva para desktop e mobile
 - 💾 Gerenciamento de dados local com validação e metadados
 
@@ -26,6 +27,7 @@ O frontend foi desenvolvido em **HTML5, CSS3 e JavaScript Vanilla** com foco em:
 | **JavaScript Vanilla** | Sem frameworks, execução leve, validação de formulário, comunicação com API |
 | **LocalStorage API** | Persistência de dados com hash e metadados de controle |
 | **Fetch API** | Requisições HTTP assíncronas para backend, tratamento de erros |
+| **html2pdf.js** | Geração dinâmica de PDFs a partir do DOM |
 | **Responsive Design** | Mobile-first, breakpoints para tablets e desktops |
 
 ---
@@ -57,7 +59,8 @@ frontend/
         ├── functions.js     # Funções utilitárias globais
         ├── home.js          # Scripts da landing page
         ├── solicitar-lista.js # Validação e lógica do formulário
-        └── lista-page.js    # Renderização e navegação de treinos
+        ├── lista-page.js    # Renderização e navegação de treinos
+        └── pdf-generator.js # Geração e visualização de PDFs
 ```
 
 ---
@@ -76,8 +79,8 @@ frontend/
 - 📝 Campos: Nome, Peso, Idade, Altura, Disponibilidade, Local, Objetivo
 - ✅ Validação em tempo real com mensagens de erro
 - 🎬 Vídeo de fundo
-- 🔄 Estados de loading durante a requisição
-- 💾 Armazenamento local de dados
+- 🔄 Estados de loading com spinner animado
+- 💾 Armazenamento local de dados com retry automático
 
 **Rota:** `/app/view/solicitar-lista.html`
 
@@ -94,12 +97,13 @@ frontend/
 | **Objetivo** | Obrigatório, opções: Perder Peso, Ganhar Peso, Hipertrofia, Definição |
 
 ### 3️⃣ **lista-exercicios.html** — Exibição de Planos
-- 📊 Renderização dinâmica de dias de treino
-- 🏋️ Detalhes de exercícios (nome, séries, repetições, descanso, vídeo)
-- 🍽️ Sugestões nutricionais (pré e pós-treino)
-- 🔄 Estado de loading com spinner
-- 📄 Botão para gerar PDF (preparado para extensão)
+- 📊 Renderização dinâmica de dias de treino com navegação por cards
+- 🏋️ Detalhes de exercícios (nome, séries, repetições, descanso, vídeo YouTube)
+- 🍽️ Sugestões nutricionais com links de receitas (pré e pós-treino)
+- 🔄 Estado de loading com spinner e retry automático (240s timeout)
+- 📄 Botões para visualizar preview e gerar PDF
 - 🔙 Botão para refazer o plano
+- 🎨 Estilos padronizados com 6 variantes de botões
 
 **Rota:** `/app/view/lista-exercicios.html`
 
@@ -131,13 +135,14 @@ const regrasValidacao = {
 
 - **Armazenamento com metadados:**
   - Timestamp de criação
-  - Hash para detectar corrupção
+  - Hash SHA-256 para detectar corrupção
   - Versão do formato
   - Tamanho em KB
 
 - **Expiração automática:** 24 horas
 - **Limite de tamanho:** 800 KB
 - **Limpeza de dados:** Removidos ao expirar ou quando corrompidos
+- **Polling com retry:** Até 240 segundos com backoff exponencial
 
 ```javascript
 const STORAGE_CONFIG = {
@@ -156,7 +161,7 @@ async function solicitarPlano(dadosUsuario) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(dadosFormatados),
-    timeout: 30000
+    timeout: 240000 // 4 minutos
   });
   
   if (!response.ok) {
@@ -166,6 +171,31 @@ async function solicitarPlano(dadosUsuario) {
   return await response.json();
 }
 ```
+
+### 📄 **Geração de PDF** (`pdf-generator.js`)
+
+- **Preview modal:** Visualiza quantas páginas o PDF terá antes de gerar
+- **Delimitadores visuais:** Linhas tracejadas douradas indicam quebras de página
+- **Conteúdo completo:** Treinos, exercícios com vídeos e receitas com links
+- **URLs formatadas:** Links exibidos como texto estilizado (compatível com canvas)
+- **Configurações centralizadas:** `PDF_CONFIG` com estilos e dimensões
+- **Botões reutilizáveis:** Função `criarBotao()` para consistência visual
+
+```javascript
+const PDF_CONFIG = {
+    A4_HEIGHT_MM: 297,
+    A4_HEIGHT_PX: 1122,
+    PRIMARY_COLOR: '#008fcb',
+    // ... estilos centralizados
+};
+```
+
+**Funcionalidades:**
+- ✅ Preview antes de gerar
+- ✅ Indicadores de página
+- ✅ Links clicáveis em HTML (texto estilizado em PDF)
+- ✅ Nomes de arquivo sanitizados
+- ✅ Tratamento de erros robusto
 
 ### 🎨 **Design Responsivo**
 
@@ -180,6 +210,13 @@ async function solicitarPlano(dadosUsuario) {
   - Opacity reduzida (0.1) para legibilidade
   - Fallback para cor sólida em navegadores antigos
 
+### ♿ **Acessibilidade**
+
+- Rótulos ARIA em campos de formulário
+- Indicadores de carregamento com `aria-hidden`
+- Navegação semântica entre seções
+- Suporte a leitores de tela
+
 ---
 
 ## 🚀 Configuração e Instalação
@@ -191,6 +228,7 @@ async function solicitarPlano(dadosUsuario) {
   - LocalStorage API
   - Fetch API
   - CSS Grid/Flexbox
+  - ES6+ JavaScript
 - Servidor web (Apache, Nginx) ou local com live server
 - Conexão com backend AICan (produção ou desenvolvimento)
 
@@ -351,7 +389,7 @@ Adicione a tag meta em `index.html` para segurança adicional:
 ```html
 <meta http-equiv="Content-Security-Policy" 
       content="default-src 'self'; 
-               script-src 'self'; 
+               script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; 
                style-src 'self' 'unsafe-inline'; 
                media-src https:; 
                connect-src https://backend-ai-can.onrender.com;">
@@ -395,6 +433,21 @@ localStorage.removeItem('aican_resposta');
 localStorage.removeItem('aican_metadata');
 ```
 
+### Teste de PDF
+
+```javascript
+// Abra a página de lista-exercicios.html e execute:
+
+// Teste 1: Abrir preview (sem gerar)
+document.getElementById('btnPreviewPDF').click();
+
+// Teste 2: Gerar PDF após preview
+// Clique em "Gerar PDF" no modal que aparece
+
+// Teste 3: Verificar console para logs
+console.log('Verifique console para mensagens de log de geração');
+```
+
 ---
 
 ## 📊 Performance e Otimizações
@@ -403,29 +456,29 @@ localStorage.removeItem('aican_metadata');
 
 | Recurso | Tamanho |
 |---------|---------|
-| HTML (3 páginas) | ~15 KB |
-| CSS (3 folhas) | ~25 KB |
-| JavaScript (5 scripts) | ~35 KB |
+| HTML (3 páginas) | ~18 KB |
+| CSS (3 folhas) | ~28 KB |
+| JavaScript (6 scripts) | ~45 KB |
 | Vídeo (gym.fundo.mp4) | ~5-10 MB (comprimido) |
-| **Total (sem vídeo)** | ~75 KB |
+| **Total (sem vídeo)** | ~91 KB |
 
 ### Otimizações Implementadas
 
 ✅ **Lazy loading** de scripts (carregados apenas quando necessário)  
 ✅ **Variáveis CSS** para reutilização de cores e tamanhos  
 ✅ **Flexbox/Grid** para layout eficiente  
-✅ **Debouncing** em validações (pode ser adicionado)  
-✅ **Compressão de vídeo** (use format like WebM ou HEVC)  
+✅ **Debouncing** em validações  
+✅ **Compressão de vídeo** (use formato como WebM ou HEVC)  
 ✅ **Caching de localStorage** com expiração inteligente  
+✅ **Centralização de configurações** (PDF_CONFIG, STORAGE_CONFIG)  
+✅ **Funções auxiliares reutilizáveis** (criarBotao, converterURLsEmLinks)  
 
 ### Melhorias Futuras
 
 - [ ] Minificação de CSS/JS para produção
-- [ ] Service Workers para offline support
-- [ ] PWA manifest para instalação mobile
 - [ ] Compressão de vídeo (WebM + MP4 fallback)
 - [ ] Lazy loading de imagens
-- [ ] Otimização de Core Web Vitals (LCP, CLS, FID)
+- [ ] Temas dark/light automático
 
 ---
 
@@ -469,19 +522,25 @@ localStorage.removeItem('aican_metadata');
 2. Teste cada validador isoladamente
 3. Confirme que os `id` dos inputs correspondem aos nomes em `regrasValidacao`
 
-### Validação não aparece em tempo real
+### Erro: `PDF não gera`
 
-**Causa:** Falta event listener em inputs
+**Causa:** html2pdf.js não carregou ou dados inválidos
 
 **Solução:**
-1. Adicione event listeners em `solicitar-lista.js`:
-```javascript
-document.querySelectorAll('input, select').forEach(field => {
-  field.addEventListener('blur', () => {
-    // Validar campo ao sair do foco
-  });
-});
-```
+1. Verifique CDN: `https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js`
+2. Abra console (F12) e procure erros
+3. Verifique se os dados do plano foram carregados
+4. Teste preview primeiro (clique em "Visualizar PDF")
+
+### Links não aparecem no PDF
+
+**Causa:** URLs não extraídas ou não renderizadas
+
+**Solução:**
+1. Verifique console para logs de URLs
+2. Certifique-se de que `ex.video_url` está preenchido no backend
+3. Verifique se `item.link_receita` existe em receitas
+4. Teste no navegador primeiro (HTML deve mostrar todos os links)
 
 ---
 
@@ -492,6 +551,8 @@ document.querySelectorAll('input, select').forEach(field => {
 - [LocalStorage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 - [CSS Grid & Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
 - [HTML5 Video](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video)
+- [html2pdf.js](https://html2pdf.clownfish.top/) — Documentação oficial
+- [Blob & File APIs](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
 
 ---
 
@@ -510,6 +571,7 @@ document.querySelectorAll('input, select').forEach(field => {
 - Use nomes descritivos para variáveis
 - Teste em múltiplos navegadores (Chrome, Firefox, Safari, Edge)
 - Valide HTML com [W3C Validator](https://validator.w3.org/)
+- Mantenha funções pequenas e reutilizáveis
 
 ---
 
@@ -526,10 +588,25 @@ Trabalho acadêmico para fins educacionais.
 
 ---
 
-## 🔄 Melhorias Futuras
+## 🔄 Changelog
 
-- [ ] Modo dark/light automático
-- [ ] Exportação em PDF e imagem
+### v1.1.0 (21 de novembro de 2025)
+- ✅ Adicionar geração e visualização de PDFs
+- ✅ Integrar botões de PDF em lista-exercicios.html
+- ✅ Aprimorar solicita-lista.js com validação e tratamento de erros
+- ✅ Atualizar estilos em lista.css e solicitar-lista.css
+- ✅ Melhorar acessibilidade com rótulos ARIA
+- ✅ Refatorar pdf-generator.js para centralização de configurações
+- ✅ Implementar preview modal com indicadores de página
+- ✅ Adicionar suporte a URLs em exercícios e receitas
+
+### v1.0.0 (Versão inicial)
+- ✅ Landing page com vídeo de fundo
+- ✅ Formulário de coleta com validação
+- ✅ Exibição dinâmica de planos de treino
+- ✅ LocalStorage com metadados e expiração
+- ✅ Polling com retry automático (240s)
+- ✅ Interface responsiva
 
 ---
 
@@ -539,6 +616,6 @@ Para dúvidas ou problemas, abra uma **issue** no repositório.
 
 ---
 
-**Última atualização:** 20 de novembro de 2025  
-**Versão:** 1.0.0  
-**Status:** Ativo
+**Última atualização:** 21 de novembro de 2025  
+**Versão:** 1.1.0  
+**Status:** Ativo e em desenvolvimento
