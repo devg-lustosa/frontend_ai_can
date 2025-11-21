@@ -7,47 +7,7 @@ const STORAGE_CONFIG = {
   MAX_SIZE_KB: 800
 };
 
-function simpleHash(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
-  }
-  return hash.toString(36);
-}
-
-function salvarLocalStorage(key, data) {
-  try {
-    const dataStr = JSON.stringify(data);
-    const sizeKB = new Blob([dataStr]).size / 1024;
-
-    if (sizeKB > STORAGE_CONFIG.MAX_SIZE_KB) {
-      console.warn(`Dados muito grandes: ${sizeKB.toFixed(2)}KB (máximo: ${STORAGE_CONFIG.MAX_SIZE_KB}KB)`);
-      limparDadosStorage();
-    }
-
-    const metadata = {
-      timestamp: Date.now(),
-      hash: simpleHash(dataStr),
-      version: '1.0',
-      size: sizeKB
-    };
-
-    localStorage.setItem(key, dataStr);
-    localStorage.setItem(STORAGE_CONFIG.METADATA_KEY, JSON.stringify(metadata));
-
-    console.log(`Dados salvos: ${sizeKB.toFixed(2)}KB`);
-  } catch (err) {
-    console.error('Erro ao salvar no localStorage:', err);
-    if (err.name === 'QuotaExceededError') {
-      alert('Espaço de armazenamento cheio. Limpando dados antigos...');
-      limparDadosStorage();
-    }
-  }
-}
-
-function carregarLocalStoage(key) {
+function carregarLocalStorage(key) {
   try {
     const dataStr = localStorage.getItem(key);
     const metadataStr = localStorage.getItem(STORAGE_CONFIG.METADATA_KEY);
@@ -94,33 +54,111 @@ function limparDadosStorage() {
   localStorage.removeItem('aican_solicitacao');
 }
 
-async function carregarPlanoTreino() {
-  let plan = null;
+async function enviarSolicitacaoECarregar(loadingEl, loadingText) {
+  const solicitacaoRaw = localStorage.getItem('aican_solicitacao');
+  if (!solicitacaoRaw) return null;
+
+  let solicitacao = null;
+  try { solicitacao = JSON.parse(solicitacaoRaw); } catch (e) { return null; }
+
+  if (!solicitacao) return null;
 
   try {
-    const dados = carregarLocalStoage(STORAGE_CONFIG.PLAN_KEY);
+    const resposta = await solicitarPlano(solicitacao);
+    const plano = resposta?.plano || resposta;
+    if (plano && plano.nome_da_rotina && plano.dias_de_treino && plano.sugestoes_nutricionais) {
+      try { salvarLocalStorage(STORAGE_CONFIG.PLAN_KEY, resposta); } catch (e) { localStorage.setItem(STORAGE_CONFIG.PLAN_KEY, JSON.stringify(resposta)); }
+      localStorage.removeItem('aican_solicitacao');
+      if (loadingEl) loadingEl.style.display = 'none';
+      mostrarLista(plano);
+      return true;
+    }
+  } catch (err) {
+    console.error('Erro ao enviar solicitação:', err);
+  }
+  return false;
+}
 
-    if (dados) {
-      plan = dados.plano || dados;
+async function carregarPlanoTreino() {
+  const loadingEl = document.getElementById('loading');
+  const conteudoLista = document.getElementById('conteudoLista');
+  const loadingText = document.getElementById('loadingText');
 
-      if (!plan.nome_da_rotina || !plan.dias_de_treino || !plan.sugestoes_nutricionais) {
-        console.error('Estrutura de dados inválida');
-        limparDadosStorage();
-        redirectToForm();
-        return;
-      }
+  try {
+    const dados = carregarLocalStorage(STORAGE_CONFIG.PLAN_KEY);
+    const plan = dados ? (dados.plano || dados) : null;
 
-      console.log('Plano carregado com sucesso');
+    if (plan && plan.nome_da_rotina && plan.dias_de_treino && plan.sugestoes_nutricionais) {
+      console.log('Plano carregado (fast path)');
+      if (loadingEl) loadingEl.style.display = 'none';
       mostrarLista(plan);
       return;
     }
   } catch (err) {
-    console.warn('Erro ao processar dados:', err);
-    limparDadosStorage();
+    console.warn('Erro ao tentar fast-path:', err);
   }
 
-  console.log('Nenhum plano disponível - redirecionando para formulário');
-  redirectToForm();
+  async function esperarPlanoTreino(maxWaitMs = 240000, intervalMs = 800) {
+    const started = Date.now();
+    while (Date.now() - started < maxWaitMs) {
+      try {
+        const dados = carregarLocalStorage(STORAGE_CONFIG.PLAN_KEY);
+        const plan = dados ? (dados.plano || dados) : null;
+        if (plan && plan.nome_da_rotina && plan.dias_de_treino && plan.sugestoes_nutricionais) {
+          return plan;
+        }
+      } catch (err) {
+        console.warn('Erro ao ler localStorage durante polling:', err);
+        break;
+      }
+      await new Promise((r) => setTimeout(r, intervalMs));
+    }
+    return null;
+  }
+
+  if (loadingText) loadingText.textContent = 'Aguardando sua lista — ainda estamos gerando, por favor espere...';
+
+  if (await enviarSolicitacaoECarregar(loadingEl, loadingText)) {
+    return;
+  }
+
+  const plan = await esperarPlanoTreino(30000, 1000);
+  if (plan) {
+    if (loadingEl) loadingEl.style.display = 'none';
+    console.log('Plano carregado após polling');
+    mostrarLista(plan);
+    return;
+  }
+
+  if (loadingText) loadingText.textContent = 'Ainda estamos gerando seu plano — isso pode levar alguns segundos.';
+
+  const actions = document.getElementById('loadingActions');
+  if (actions) actions.style.display = 'flex';
+
+  const retryBtn = document.getElementById('btnRetry');
+  const backBtn = document.getElementById('btnBack');
+
+  if (retryBtn) retryBtn.onclick = async () => {
+    if (actions) actions.style.display = 'none';
+    if (loadingText) loadingText.textContent = 'Rechecando — aguarde...';
+
+    if (await enviarSolicitacaoECarregar(loadingEl, loadingText)) {
+      return;
+    }
+
+    const p = await esperarPlanoTreino(240000, 800);
+    if (p) {
+      if (loadingEl) loadingEl.style.display = 'none';
+      mostrarLista(p);
+      return;
+    }
+    if (actions) actions.style.display = 'flex';
+    if (loadingText) loadingText.textContent = 'Ainda não encontramos seu plano — você pode tentar novamente ou voltar.';
+  };
+
+  if (backBtn) backBtn.onclick = () => {
+    window.location.href = '../view/solicitar-lista.html';
+  };
 }
 
 function redirectToForm() {
@@ -259,4 +297,7 @@ function mostrarDetalhesDay(index, dias) {
   }
 }
 
-setTimeout(carregarPlanoTreino, 1500);
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(carregarPlanoTreino, 300);
+});

@@ -9,7 +9,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: #000;
   color: #fff;
   min-height: 100vh;
@@ -28,7 +28,7 @@ body {
   object-fit: cover;
   z-index: -1;
   opacity: 0.1;
-  filter: brightness(1.2);
+  filter: brightness(1.0);
 }
 
 .container {
@@ -49,15 +49,18 @@ body {
 .container::-webkit-scrollbar {
   width: 8px;
 }
+
 .container::-webkit-scrollbar-track {
   background: #111;
   border-radius: 8px;
 }
+
 .container::-webkit-scrollbar-thumb {
   background-color: var(--cor-texto);
   border-radius: 8px;
   border: 2px solid #111;
 }
+
 .container {
   scrollbar-width: thin;
   scrollbar-color: var(--cor-texto) #111;
@@ -75,26 +78,56 @@ body {
   text-align: center;
   margin-bottom: 5px;
 }
+
 .logo {
   width: 250px;
 }
 
+:root {
+  --cor-texto: #008fcb;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #000;
+  color: #fff;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 h2 {
-  color: var(--cor-texto);
-  font-size: 22px;
   margin-bottom: 22px;
   text-align: center;
   width: 100%;
 }
 
 h3 {
-  color: var(--cor-texto);
-  font-size: 18px;
   margin: 30px 0 15px;
   text-align: left;
   width: 100%;
   border-bottom: 1px solid #333;
   padding-bottom: 5px;
+}
+
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.1;
+  filter: brightness(1.0);
 }
 
 .loading-content {
@@ -104,6 +137,7 @@ h3 {
   margin-top: 30px;
   width: 100%;
 }
+
 .circular-loader {
   width: 60px;
   height: 60px;
@@ -113,18 +147,121 @@ h3 {
   animation: spin 1s linear infinite;
   margin-bottom: 20px;
 }
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
+
 .loading-text {
-  font-size: 16px;
   color: #fff;
   font-weight: 500;
+  margin-bottom: 25px;
 }
 
-/* Treinos por dia */
+/* ===== SISTEMA DE BOTÕES PADRONIZADO ===== */
+/* Estilo base para todos os botões */
+button,
+.btn {
+  font-family: 'Roboto', sans-serif;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 180ms ease-in-out, box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  outline: none;
+}
+
+button:focus-visible,
+.btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 143, 203, 0.3);
+}
+
+/* Variante PRIMARY (padrão) */
+.btn,
+.btn-primary,
+button:not([class]) {
+  padding: 12px 20px;
+  background-color: var(--cor-texto);
+  color: #000;
+  font-size: 14px;
+}
+
+.btn:hover,
+.btn-primary:hover,
+button:not([class]):hover {
+  background-color: #0278aa;
+  transform: scale(1.08);
+}
+
+.btn:active,
+.btn-primary:active,
+button:not([class]):active {
+  transform: scale(0.98);
+}
+
+/* Variante VOLTAR (secundário) */
+.btn-voltar {
+  flex: 1;
+  padding: 12px 16px;
+  background-color: var(--cor-texto);
+  color: #000;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btn-voltar:hover {
+  background-color: #0278aa;
+  transform: scale(1.08);
+}
+
+.btn-voltar:active {
+  transform: scale(0.98);
+}
+
+/* Variante PDF */
+.btn-pdf {
+  flex: 1;
+  padding: 12px 16px;
+  background-color: var(--cor-texto);
+  color: #000;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btn-pdf:hover {
+  background-color: #0278aa;
+  transform: scale(1.08);
+}
+
+.btn-pdf:active {
+  transform: scale(0.98);
+}
+
+.btn-pdf:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+/* Ações de loading */
+.loading-actions {
+  display: none;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.loading-actions .btn-voltar,
+.loading-actions .btn-pdf {
+  padding: 10px 14px;
+  font-size: 12px;
+  min-width: 120px;
+}
 .treinos-scroll {
   display: flex;
   overflow-x: auto;
@@ -134,6 +271,7 @@ h3 {
   justify-content: center;
   width: 100%;
 }
+
 .treino-card {
   min-width: 120px;
   max-width: 220px;
@@ -147,19 +285,23 @@ h3 {
   flex-shrink: 0;
   font-weight: bold;
 }
+
 .treino-card span {
   display: block;
   font-size: 13px;
   color: #aaa;
   margin-top: 4px;
 }
+
 .treino-card:hover {
   background-color: #0278aa;
 }
+
 .treino-detalhado {
   margin-top: 20px;
   width: 100%;
 }
+
 .exercicio {
   margin-bottom: 20px;
   padding-left: 10px;
@@ -168,12 +310,14 @@ h3 {
   font-size: 15px;
   color: #ddd;
 }
+
 .exercicio strong {
   display: block;
   font-size: 16px;
   color: var(--cor-texto);
   margin-bottom: 4px;
 }
+
 .exercicio a {
   color: var(--cor-texto);
   text-decoration: underline;
@@ -185,12 +329,15 @@ h3 {
   margin-top: 40px;
   width: 100%;
 }
+
 .receita-bloco {
   width: 100%;
 }
+
 .receita-bloco {
   margin-bottom: 30px;
 }
+
 .receita-tipo {
   font-size: 20px;
   color: var(--cor-texto);
@@ -198,6 +345,7 @@ h3 {
   border-bottom: 1px solid #333;
   padding-bottom: 5px;
 }
+
 .receita-card {
   background-color: #1a1a1a;
   border-left: 4px solid var(--cor-texto);
@@ -209,21 +357,25 @@ h3 {
   max-width: 100%;
   box-sizing: border-box;
 }
+
 .receita-card h4 {
   margin: 0 0 8px;
   font-size: 17px;
   color: var(--cor-texto);
 }
+
 .receita-card ul {
   margin: 0 0 8px;
   padding-left: 20px;
   color: #ccc;
 }
+
 .receita-card p {
   font-size: 14px;
   color: #aaa;
   margin-bottom: 8px;
 }
+
 .receita-card a {
   color: var(--cor-texto);
   font-weight: bold;
@@ -235,25 +387,27 @@ h3 {
 .botoes-final {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 15px;
   margin-top: 40px;
   width: 100%;
+  flex-wrap: wrap;
 }
-.btn-voltar,
-.btn-pdf {
+
+.botoes-final button {
   flex: 1;
-  padding: 14px;
-  background-color: var(--cor-texto);
-  border: none;
-  border-radius: 8px;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  transform: scale(1);
-  transition: background 0.3s, transform 180ms ease-in-out;
+  min-width: 120px;
 }
-.btn-voltar:hover,
-.btn-pdf:hover {
-  background-color: #0278aa;
-  transform: scale(1.08);
+
+/* ===== ESTILOS PARA MODAL DE PREVIEW ===== */
+#previewModal {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

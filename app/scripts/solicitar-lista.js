@@ -85,9 +85,13 @@ function validarCampo(input, rules) {
 }
 
 function mostrarErro(input, mensagem) {
+  if (!input || !input.parentNode) {
+    console.error('Elemento inválido para mostrar erro:', input);
+    return;
+  }
   const span = document.createElement("span");
   span.classList.add("error-message");
-  span.innerText = mensagem;
+  span.textContent = mensagem;
   input.parentNode.appendChild(span);
 }
 
@@ -110,79 +114,49 @@ function irParaLoading() {
 
   for (const field of fields) {
     const input = document.getElementById(field.id);
+    if (!input) {
+      console.error(`Campo ${field.id} não encontrado no DOM`);
+      isValid = false;
+      continue;
+    }
     if (!validarCampo(input, field.rules)) {
       isValid = false;
     }
   }
 
-  if (isValid) {
-    const payload = {
-      nome: nome.value.trim(),
-      peso: Number(peso.value),
-      idade: Number(idade.value),
-      altura: Number(altura.value),
-      disponibilidade: Number(disponibilidade.value),
-      localTreino: localTreino.value,
-      objetivo: objetivo.value,
-    };
-
-    localStorage.setItem("aican_solicitacao", JSON.stringify(payload));
-
-    const botao = document.querySelector('.btn-submit');
-    botao.disabled = true;
-    botao.textContent = 'Gerando seu plano...';
-
-    solicitarPlano(payload)
-      .then((resposta) => {
-        const plano = resposta?.plano || resposta;
-        if (!plano || !plano.nome_da_rotina || !plano.dias_de_treino || !plano.sugestoes_nutricionais) {
-          console.error('Resposta da API com formato inválido:', resposta);
-          botao.disabled = false;
-          botao.textContent = 'Gerar Lista de Exercícios';
-          alert('Resposta da API inválida. Verifique o backend ou tente novamente.');
-          return;
-        }
-        if (typeof salvarLocalStorage === 'function') {
-          salvarLocalStorage('aican_resposta', resposta);
-        } else {
-          localStorage.setItem("aican_resposta", JSON.stringify(resposta));
-        }
-        window.location.href = "../view/lista-exercicios.html";
-      })
-      .catch((error) => {
-        console.error('Erro ao solicitar plano:', error);
-        botao.disabled = false;
-        botao.textContent = 'Gerar Lista de Exercícios';
-        alert(`Erro ao gerar plano: ${error.message}\n\nTente novamente mais tarde.`);
-      });
+  if (!isValid) {
+    return;
   }
-}
 
-function salvarLocalStorage(key, data) {
+  const payload = {
+    nome: document.getElementById('nome').value.trim(),
+    peso: Number(document.getElementById('peso').value),
+    idade: Number(document.getElementById('idade').value),
+    altura: Number(document.getElementById('altura').value),
+    disponibilidade: Number(document.getElementById('disponibilidade').value),
+    localTreino: document.getElementById('localTreino').value,
+    objetivo: document.getElementById('objetivo').value,
+  };
+
+  if (!payload.nome || !payload.localTreino || !payload.objetivo) {
+    console.error('Payload inválido:', payload);
+    alert('Erro ao preparar dados. Por favor, tente novamente.');
+    return;
+  }
+
   try {
-    const dataStr = JSON.stringify(data);
-    const simpleHash = (str) => {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash;
-      }
-      return hash.toString(36);
-    };
-
-    const sizeKB = new Blob([dataStr]).size / 1024;
-
-    const metadata = {
-      timestamp: Date.now(),
-      hash: simpleHash(dataStr),
-      version: '1.0',
-      size: sizeKB
-    };
-    localStorage.setItem(key, dataStr);
-    localStorage.setItem('aican_metadata', JSON.stringify(metadata));
+    salvarLocalStorage('aican_solicitacao', payload);
   } catch (err) {
-    console.error('Erro ao salvar:', err);
-    localStorage.setItem(key, JSON.stringify(data));
+    console.error('Erro ao salvar solicitação:', err);
+    alert('Erro ao salvar dados. Por favor, tente novamente.');
+    return;
   }
+
+  const botao = document.querySelector('.btn-submit');
+  if (botao) {
+    botao.disabled = true;
+    botao.textContent = 'Abrindo tela de carregamento...';
+  }
+
+  window.location.href = "../view/lista-exercicios.html";
 }
