@@ -1,3 +1,5 @@
+// app/scripts/home.js
+
 document.addEventListener("DOMContentLoaded", () => {
   const frases = [
     "Um guia de exercícios e nutrição. Você nos diz onde quer chegar, e nossa IA sugere o caminho.",
@@ -11,19 +13,22 @@ document.addEventListener("DOMContentLoaded", () => {
   function typeWriter(text, i = 0) {
     if (i < text.length) {
       descricao.textContent = text.substring(0, i + 1);
-      setTimeout(() => typeWriter(text, i + 1), 60); // velocidade da digitação
+      setTimeout(() => typeWriter(text, i + 1), 60);
     }
   }
 
   function trocarFrase() {
-    index = (index + 1) % frases.length;
-    descricao.textContent = "";
-    typeWriter(frases[index]);
+    descricao.style.opacity = "0";
+    
+    setTimeout(() => {
+      index = (index + 1) % frases.length;
+      descricao.textContent = "";
+      
+      descricao.style.opacity = "1";
+      typeWriter(frases[index]);
+    }, 400);
   }
 
-  // primeira frase
   typeWriter(frases[index]);
-
-  // troca a cada 6 segundos
   setInterval(trocarFrase, 13000);
 });
