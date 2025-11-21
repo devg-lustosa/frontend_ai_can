@@ -225,7 +225,7 @@ function gerarConteudoPDF(plano) {
     let htmlContent = `
     <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid ${primaryColor}; padding-bottom: 10px;">
       <h1 style="color: ${primaryColor}; margin: 0;">${plano.nome_da_rotina || 'Plano de Treino AICAN'}</h1>
-      <p style="color: #666; margin-top: 5px;">Em caso de dúvidas sempre procure um profissional!</p>
+      <p style="color: #666; margin-top: 5px;">Em caso de dúvidas sempre procure um profissional</p>
     </div>
   `;
 
