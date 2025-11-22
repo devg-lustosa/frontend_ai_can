@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FAQ – Sistema de Treino com IA</title>
+    <link rel="stylesheet" href="../styles/ajuda.css" type="text/css" />
+  </head>
+  <body>
+    <!-- Vídeo de fundo -->
+    <video autoplay muted loop playsinline class="bg-video">
+      <source src="../assets/gym.fundo.mp4" type="video/mp4" />
+      Seu navegador não suporta vídeo HTML 5
+    </video>
+    <div class="video-overlay"></div>
+
+    <section class="faq-card">
+      <div class="logo-container">
+        <img src="../assets/logo.aican.png" alt="Logo Aican" class="logo" />
+      </div>
+
+      <!-- Botão de voltar -->
+      <button
+        class="btn-voltar"
+        onclick="
+          voltarMenu()"
+      >
+        Voltar
+      </button>
+
+      <h1 class="faq-heading">FAQ • Sistema de Treino com IA</h1>
+      <div class="faq-list">
+        <details open>
+          <summary>1. O que é este site e para que ele serve?</summary>
+          <p>
+            Ele usa inteligência artificial para criar rotinas completas (treino
+            diário, pré e pós-treino) com base em peso, idade, altura, objetivo
+            e dias de treino por semana.
+          </p>
+        </details>
+
+        <details>
+          <summary>2. Quais informações preciso informar?</summary>
+          <ul>
+            <li><strong>Peso:</strong> define esforço e gasto calórico.</li>
+            <li>
+              <strong>Idade:</strong> ajusta limites de intensidade e segurança.
+            </li>
+            <li><strong>Altura:</strong> ajuda a calcular IMC e biotipo.</li>
+            <li>
+              <strong>Objetivo:</strong> hipertrofia, emagrecimento, força, etc.
+            </li>
+            <li>
+              <strong>Dias/semana:</strong> gera divisões como Full Body, ABC,
+              ABCD, PPL.
+            </li>
+          </ul>
+          <p>Quanto mais precisos os dados, melhor o plano.</p>
+        </details>
+
+        <details>
+          <summary>3. Como a IA monta o meu treino?</summary>
+          <p>
+            Ela cruza suas informações com um banco de exercícios e princípios
+            fisiológicos para definir intensidade, volume, séries, repetições,
+            tempos de descanso, ordem segura e sugestões de pré/pós-treino.
+          </p>
+        </details>
+
+        <details>
+          <summary>4. O que está incluído no plano?</summary>
+          <p>
+            <strong>Treino principal:</strong> divisão, exercícios, séries,
+            repetições, descanso, carga e progressão.
+          </p>
+          <p>
+            <strong>Pré-treino:</strong> alimentos, hidratação, foco e horários.
+          </p>
+          <p>
+            <strong>Pós-treino:</strong> recuperação muscular, refeições
+            proteicas, alongamentos e descanso.
+          </p>
+        </details>
+
+        <details>
+          <summary>5. Por que altura, peso e idade são obrigatórios?</summary>
+          <p>
+            Esses dados permitem calcular riscos, esforço e proporções para
+            sugerir treinos seguros e compatíveis com seu biotipo.
+          </p>
+        </details>
+
+        <details>
+          <summary>6. A rotina muda conforme os dias semanais?</summary>
+          <p>
+            Sim. 1–3 dias → Full Body; 4 dias → Upper/Lower ou ABCD; 5–6 dias →
+            ABC clássico ou PPL. Cada combinação gera uma rotina diferente.
+          </p>
+        </details>
+
+        <details>
+          <summary>7. O site é seguro? Os treinos são confiáveis?</summary>
+          <p>
+            A IA aplica sobrecarga progressiva, volume adequado, descanso mínimo
+            necessário, foco em exercícios seguros e instruções de técnica,
+            evitando treinos arriscados.
+          </p>
+        </details>
+
+        <details>
+          <summary>8. Posso usar em casa ou só na academia?</summary>
+          <p>
+            Funciona nos dois. Se você informar que treina em casa, a IA traz
+            variações com peso corporal; se tiver academia, sugere exercícios
+            com equipamentos.
+          </p>
+        </details>
+
+        <details>
+          <summary>9. Posso gerar quantos treinos quiser?</summary>
+          <p>
+            Sim. Ajuste objetivos e frequência para comparar rotinas e descobrir
+            a melhor combinação.
+          </p>
+        </details>
+
+        <details>
+          <summary>10. O treino é atualizado automaticamente?</summary>
+          <p>
+            Sempre que você alterar peso, objetivo ou frequência, o sistema cria
+            uma versão nova e totalmente adaptada.
+          </p>
+        </details>
+      </div>
+    </section>
+    <script src="../scripts/functions.js"></script>
+  </body>
+</html>
