@@ -1,66 +1,87 @@
-/* Variáveis globais */
+/* =========================================
+   RESET E VARIÁVEIS GLOBAIS
+   ========================================= */
 :root {
   --cor-texto: #008fcb;
+  --bg-container: #111;
+  --bg-body: #000;
+  --cor-branca: #fff;
+  --font-main: "Roboto", sans-serif;
 }
 
-/* Corpo da página */
-body {
-  height: 100%;
+* {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  font-family: "Roboto", sans-serif;
-  background-color: #000;
-  color: #fff;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* Base para rem */
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-body);
+  color: var(--cor-branca);
   min-height: 100vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden; /* Evita scroll lateral na janela inteira */
+  /* overflow-y é gerenciado via media queries */
 }
 
-/* Vídeo de fundo */
+/* =========================================
+   BACKGROUND VIDEO
+   ========================================= */
 .bg-video {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   z-index: -1;
   opacity: 0.1;
-  filter: brightness(1.0);
+  filter: brightness(1);
 }
 
+/* =========================================
+   CONTAINER PRINCIPAL (O "CARTÃO")
+   ========================================= */
 .container {
   width: 90%;
-  min-width: 550px;
-  max-width: 1300px;
-  width: auto;
-  background-color: #111;
-  border-radius: 16px;
-  padding: 19px 30px;
-  max-height: 80vh;
+  max-width: 1200px;
+  /* Removemos min-width fixo para permitir telas pequenas */
+  min-width: auto;
+  background-color: var(--bg-container);
+  border-radius: 1rem; /* 16px */
+  padding: 2rem; /* ~32px */
 
+  /* Scroll interno para desktop */
+  max-height: 85vh;
   overflow-y: auto;
   overflow-x: hidden;
-  margin: 0 auto;
+
+  margin: 1rem auto;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+/* Estilização da barra de rolagem */
 .container::-webkit-scrollbar {
   width: 8px;
 }
-
 .container::-webkit-scrollbar-track {
   background: #111;
   border-radius: 8px;
 }
-
 .container::-webkit-scrollbar-thumb {
   background-color: var(--cor-texto);
   border-radius: 8px;
   border: 2px solid #111;
 }
-
 .container {
   scrollbar-width: thin;
   scrollbar-color: var(--cor-texto) #111;
@@ -73,69 +94,50 @@ body {
   width: 100%;
 }
 
+/* =========================================
+   LOGO E CABEÇALHO
+   ========================================= */
 .logo-container {
   width: 100%;
   text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 1rem;
 }
 
 .logo {
-  width: 250px;
-}
-
-:root {
-  --cor-texto: #008fcb;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #000;
-  color: #fff;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Responsivo: nunca maior que 250px, mas encolhe se precisar */
+  max-width: 250px;
+  width: 100%;
+  height: auto;
 }
 
 h2 {
-  margin-bottom: 22px;
+  margin-bottom: 1.5rem;
   text-align: center;
   width: 100%;
+  /* Fonte fluida: Mínimo 1.5rem, Ideal 4vw, Máximo 2rem */
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  color: var(--cor-branca);
 }
 
 h3 {
-  margin: 30px 0 15px;
+  margin: 2rem 0 1rem;
   text-align: left;
   width: 100%;
   border-bottom: 1px solid #333;
-  padding-bottom: 5px;
+  padding-bottom: 0.5rem;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
 }
 
-.bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0.1;
-  filter: brightness(1.0);
-}
-
+/* =========================================
+   LOADING
+   ========================================= */
 .loading-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 2rem;
   width: 100%;
+  text-align: center;
 }
 
 .circular-loader {
@@ -145,7 +147,7 @@ h3 {
   border-top: 6px solid var(--cor-texto);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 @keyframes spin {
@@ -157,24 +159,28 @@ h3 {
 .loading-text {
   color: #fff;
   font-weight: 500;
-  margin-bottom: 25px;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  padding: 0 10px;
 }
 
-/* ===== SISTEMA DE BOTÕES PADRONIZADO ===== */
-/* Estilo base para todos os botões */
+/* =========================================
+   BOTÕES (UI KIT)
+   ========================================= */
 button,
 .btn {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-main);
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem; /* 8px */
   cursor: pointer;
   font-weight: 600;
-  transition: background-color 0.3s ease, transform 180ms ease-in-out, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   outline: none;
+  min-height: 44px; /* Altura mínima para toque em mobile */
 }
 
 button:focus-visible,
@@ -182,63 +188,25 @@ button:focus-visible,
   box-shadow: 0 0 0 3px rgba(0, 143, 203, 0.3);
 }
 
-/* Variante PRIMARY (padrão) */
-.btn,
-.btn-primary,
-button:not([class]) {
-  padding: 12px 20px;
-  background-color: var(--cor-texto);
-  color: #000;
-  font-size: 14px;
-}
-
-.btn:hover,
-.btn-primary:hover,
-button:not([class]):hover {
-  background-color: #0278aa;
-  transform: scale(1.08);
-}
-
-.btn:active,
-.btn-primary:active,
-button:not([class]):active {
-  transform: scale(0.98);
-}
-
-/* Variante VOLTAR (secundário) */
-.btn-voltar {
-  flex: 1;
-  padding: 12px 16px;
-  background-color: var(--cor-texto);
-  color: #000;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.btn-voltar:hover {
-  background-color: #0278aa;
-  transform: scale(1.08);
-}
-
-.btn-voltar:active {
-  transform: scale(0.98);
-}
-
-/* Variante PDF */
+/* Classes de Botões */
+.btn-voltar,
 .btn-pdf {
-  flex: 1;
-  padding: 12px 16px;
+  padding: 0.75rem 1.25rem;
   background-color: var(--cor-texto);
   color: #000;
-  font-weight: 600;
-  font-size: 14px;
+  font-size: 0.9rem;
+  flex: 1; /* Distribui espaço igualmente */
 }
 
+.btn-voltar:hover,
 .btn-pdf:hover {
   background-color: #0278aa;
-  transform: scale(1.08);
+  transform: scale(
+    1.02
+  ); /* Reduzi levemente a escala para não quebrar layout */
 }
 
+.btn-voltar:active,
 .btn-pdf:active {
   transform: scale(0.98);
 }
@@ -246,168 +214,226 @@ button:not([class]):active {
 .btn-pdf:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-  transform: scale(1);
+  transform: none;
 }
 
-/* Ações de loading */
 .loading-actions {
-  display: none;
-  gap: 12px;
-  margin-top: 8px;
+  display: none; /* Controlado via JS */
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.loading-actions .btn-voltar,
-.loading-actions .btn-pdf {
-  padding: 10px 14px;
-  font-size: 12px;
-  min-width: 120px;
-}
+/* =========================================
+   CONTEÚDO DA LISTA (Treinos e Receitas)
+   ========================================= */
+
+/* Scroll Horizontal dos Cards de Treino */
 .treinos-scroll {
   display: flex;
   overflow-x: auto;
-  gap: 12px;
-  max-width: 100%;
-  box-sizing: border-box;
-  justify-content: center;
+  gap: 0.75rem;
   width: 100%;
+  padding-bottom: 10px; /* Espaço para a scrollbar */
+
+  /* Alinhamento inicial à esquerda para scroll funcionar bem no mobile */
+  justify-content: flex-start;
+
+  /* Scroll suave */
+  -webkit-overflow-scrolling: touch;
 }
+
+/* Centraliza se couber tudo na tela (Desktop) */
+/* @media (min-width: 768px) {
+  .treinos-scroll {
+    justify-content: center;
+  }
+} */
 
 .treino-card {
   min-width: 120px;
-  max-width: 220px;
+  max-width: 220px; /* Limite máximo */
+  flex: 0 0 auto; /* Impede que o card encolha */
+
   background-color: #1a1a1a;
   border: 2px solid var(--cor-texto);
   border-radius: 10px;
-  padding: 10px;
+  padding: 0.75rem;
   text-align: center;
   color: #fff;
   cursor: pointer;
-  flex-shrink: 0;
   font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .treino-card span {
   display: block;
-  font-size: 13px;
+  font-size: 0.8rem;
   color: #aaa;
-  margin-top: 4px;
+  margin-top: 0.25rem;
 }
 
-.treino-card:hover {
+.treino-card:hover,
+.treino-card.active {
   background-color: #0278aa;
 }
 
+/* Detalhes do Treino */
 .treino-detalhado {
-  margin-top: 20px;
+  margin-top: 1.5rem;
   width: 100%;
 }
 
 .exercicio {
-  margin-bottom: 20px;
-  padding-left: 10px;
-  border-left: 2px solid var(--cor-texto);
-  line-height: 1.6;
-  font-size: 15px;
+  margin-bottom: 1.25rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--cor-texto);
+  line-height: 1.5;
+  font-size: 0.95rem;
   color: #ddd;
 }
 
 .exercicio strong {
   display: block;
-  font-size: 16px;
+  font-size: 1.1rem;
   color: var(--cor-texto);
-  margin-bottom: 4px;
+  margin-bottom: 0.25rem;
 }
 
 .exercicio a {
   color: var(--cor-texto);
   text-decoration: underline;
-  font-size: 14px;
+  font-size: 0.9rem;
+  word-break: break-all; /* Evita que links quebrem o layout no mobile */
 }
 
 /* Receitas */
 .receita {
-  margin-top: 40px;
+  margin-top: 2.5rem;
   width: 100%;
-}
-
-.receita-bloco {
-  width: 100%;
-}
-
-.receita-bloco {
-  margin-bottom: 30px;
 }
 
 .receita-tipo {
-  font-size: 20px;
+  font-size: 1.25rem;
   color: var(--cor-texto);
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
   border-bottom: 1px solid #333;
-  padding-bottom: 5px;
+  padding-bottom: 0.5rem;
 }
 
 .receita-card {
   background-color: #1a1a1a;
   border-left: 4px solid var(--cor-texto);
-  padding: 15px 20px;
+  padding: 1.25rem;
   border-radius: 10px;
-  margin-bottom: 20px;
-  display: block;
+  margin-bottom: 1.25rem;
   width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
 }
 
 .receita-card h4 {
-  margin: 0 0 8px;
-  font-size: 17px;
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
   color: var(--cor-texto);
 }
 
 .receita-card ul {
-  margin: 0 0 8px;
-  padding-left: 20px;
+  margin: 0 0 0.5rem;
+  padding-left: 1.25rem;
   color: #ccc;
 }
 
 .receita-card p {
-  font-size: 14px;
+  font-size: 0.9rem;
   color: #aaa;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .receita-card a {
   color: var(--cor-texto);
   font-weight: bold;
   text-decoration: underline;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
-/* Botões finais */
+/* Botões Finais */
 .botoes-final {
   display: flex;
+  flex-wrap: wrap; /* Permite quebra de linha */
   justify-content: space-between;
-  gap: 15px;
-  margin-top: 40px;
+  gap: 1rem;
+  margin-top: 2.5rem;
   width: 100%;
-  flex-wrap: wrap;
 }
 
-.botoes-final button {
-  flex: 1;
-  min-width: 120px;
-}
+/* =========================================
+   MEDIA QUERIES (RESPONSIVIDADE)
+   ========================================= */
 
-/* ===== ESTILOS PARA MODAL DE PREVIEW ===== */
-#previewModal {
-  animation: fadeIn 0.3s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+/* Tablet e Telas Menores (max 1024px) */
+@media (max-width: 1024px) {
+  .container {
+    width: 95%;
+    padding: 1.5rem;
   }
-  to {
-    opacity: 1;
+}
+
+/* Mobile (max 768px) */
+@media (max-width: 768px) {
+  body {
+    /* No mobile, liberamos o scroll da página inteira em vez de scroll interno */
+    overflow-y: auto;
+    height: auto;
+    display: block; /* Remove o flex center vertical */
+  }
+
+  .container {
+    width: 100%;
+    max-width: none;
+    border-radius: 0;
+    min-height: 100vh;
+    max-height: none; /* Remove limite de altura */
+    margin: 0;
+    padding: 1.5rem 1rem;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .logo {
+    max-width: 180px;
+  }
+
+  /* Ajuste na Grid de Botões */
+  .botoes-final {
+    flex-direction: column; /* Empilha os botões */
+  }
+
+  .botoes-final button {
+    width: 100%; /* Botão largura total */
+  }
+
+  .receita-card,
+  .treino-card {
+    /* Garante que não estoure a largura */
+    box-sizing: border-box;
+  }
+}
+
+/* Telas muito pequenas (max 480px) */
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .logo {
+    max-width: 150px;
+  }
+
+  .exercicio {
+    padding-left: 0.75rem;
+  }
+
+  .receita-card {
+    padding: 1rem;
   }
 }
