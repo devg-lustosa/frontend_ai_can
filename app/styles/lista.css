@@ -245,6 +245,12 @@ button:focus-visible,
   min-width: 120px;
   max-width: 220px; /* Limite máximo */
   flex: 0 1 120px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
   background-color: #1a1a1a;
   border: 2px solid var(--cor-texto);
   border-radius: 10px;
@@ -401,11 +407,6 @@ button:focus-visible,
     width: 100%; /* Botão largura total */
   }
 
-  .receita-card,
-  .treino-card {
-    /* Garante que não estoure a largura */
-    box-sizing: border-box;
-  }
 
   .treinos-scroll {
     flex-wrap: wrap;
@@ -414,6 +415,7 @@ button:focus-visible,
   }
 
   .treino-card {
+    height: 140px;
     flex: 1 1 calc(50% - 0.75rem);
     max-width: calc(50% - 0.75rem);
   }
@@ -438,6 +440,7 @@ button:focus-visible,
   }
 
   .treino-card {
+    height: 120px;
     flex: 1 1 100%;
     max-width: 100%;
   }
