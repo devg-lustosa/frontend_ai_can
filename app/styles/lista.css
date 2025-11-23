@@ -244,8 +244,6 @@ button:focus-visible,
 .treino-card {
   min-width: 120px;
   max-width: 220px; /* Limite máximo */
-  flex: 0 1 120px;
-  height: 160px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -259,7 +257,6 @@ button:focus-visible,
   color: #fff;
   cursor: pointer;
   font-weight: bold;
-  font-size: 0.9rem;
 }
 
 .treino-card span {
