@@ -245,11 +245,11 @@ button:focus-visible,
 }
 
 /* Centraliza se couber tudo na tela (Desktop) */
-/* @media (min-width: 768px) {
+@media (min-width: 768px) {
   .treinos-scroll {
     justify-content: center;
   }
-} */
+}
 
 .treino-card {
   min-width: 120px;
@@ -416,6 +416,10 @@ button:focus-visible,
   .treino-card {
     /* Garante que não estoure a largura */
     box-sizing: border-box;
+  }
+
+  .treinos-scroll {
+    justify-content: flex-start;
   }
 }
 
