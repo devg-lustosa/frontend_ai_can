@@ -11,7 +11,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="home.css" />
   <link rel="icon" href="./assets/favicon.png" type="image/x-icon">
-  <title>Home | AICAN</title>
+  <title>Login | AICAN</title>
 </head>
 
 <body>
@@ -28,22 +28,48 @@
       <!-- Logo -->
       <img src="./assets/logo.aican.png" alt="Logo AICAN" class="logo" />
 
-      <!-- Texto principal -->
-      <h2>Bem-vindo</h2>
-      <p class="descricao" id="descricao">
-        Um guia de exercícios e nutrição. Você nos diz onde quer chegar, e
-        nossa IA sugere o caminho.
-      </p>
+      <!-- Mensagem de Boas-vindas e Descrição Dinâmica -->
+      <h2 style="margin-bottom: 10px; color: var(--cor-texto);">Bem-vindo</h2>
+      <div class="descricao" id="descricao" style="min-height: 60px; margin-bottom: 20px;"></div>
 
-      <!-- Botão de ação -->
-      <a href="./view/solicitar-lista.html" class="btn-home">Começar agora</a>
+      <!-- Container de Formulários -->
+      <div class="auth-container">
+
+        <!-- Formulário de Login -->
+        <div id="login-form" class="auth-form">
+          <form id="form-login">
+            <div class="input-group">
+              <input type="email" id="login-email" placeholder="Seu e-mail" required />
+            </div>
+            <div class="input-group password-group">
+              <input type="password" id="login-password" placeholder="Sua senha" required />
+              <button type="button" class="toggle-password" onclick="togglePassword('login-password', this)"
+                aria-label="Mostrar/Esconder senha">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            <button type="submit" class="btn-home full-width">Entrar</button>
+          </form>
+          <p class="auth-switch">
+            Ainda não tem conta? <a href="./view/cadastro.html">Cadastre-se</a>
+          </p>
+        </div>
+
+        <div id="auth-message" class="message hidden"></div>
+      </div>
 
       <!-- Link de ajuda -->
       <a href="./view/ajuda.html" class="link-ajuda">Entenda como a IA ajuda você.</a>
     </div>
   </div>
-  <script src="./scripts/functions.js"></script>
+
+  <script src="./scripts/api.js"></script>
   <script src="./scripts/home.js"></script>
+  <script src="./scripts/login.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,32 @@
+/* styles/cadastro.css */
+
+/* Herda estilos base de home.css */
+
+.auth-container {
+    max-width: 600px;
+    /* Alinhado com solicitar-lista */
+    width: 100%;
+}
+
+/* Animação de entrada suave */
+.auth-form {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Ensure container has premium look if used standalone (though it's inside home-container) */
+.home-container {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #222;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

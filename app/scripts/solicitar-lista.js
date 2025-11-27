@@ -1,5 +1,16 @@
 // app/scripts/solicitar-lista.js
 
+// Carregar dados do usuário logado e atualizar saudação
+document.addEventListener('DOMContentLoaded', () => {
+  const userName = localStorage.getItem('user_name');
+  const greetingElement = document.getElementById('greeting');
+
+  if (userName && greetingElement) {
+    greetingElement.textContent = `Olá, ${userName}!`;
+    greetingElement.style.color = 'var(--cor-texto)';
+  }
+});
+
 const validators = {
   required: (value) => ({
     isValid: !!value?.trim(),
@@ -33,14 +44,6 @@ const validators = {
 };
 
 const regrasValidacao = {
-  nome: [
-    validators.required,
-    validators.minLength(3),
-    validators.maxLength(50),
-    validators.pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ\s'\-]+$/, "Nome contém caracteres inválidos."),
-    validators.pattern(/^[^0-9]*$/, "Nome não pode conter números.")
-  ],
-
   peso: [
     validators.required,
     validators.range(20, 350, "kg")
@@ -101,7 +104,6 @@ function irParaLoading() {
   form.querySelectorAll(".error-message").forEach((el) => el.remove());
 
   const fields = [
-    { id: 'nome', rules: regrasValidacao.nome },
     { id: 'peso', rules: regrasValidacao.peso },
     { id: 'idade', rules: regrasValidacao.idade },
     { id: 'altura', rules: regrasValidacao.altura },
@@ -128,8 +130,11 @@ function irParaLoading() {
     return;
   }
 
+  // Buscar nome do localStorage (usuário logado)
+  const userName = localStorage.getItem('user_name') || 'Usuário';
+
   const payload = {
-    nome: document.getElementById('nome').value.trim(),
+    nome: userName,
     peso: Number(document.getElementById('peso').value),
     idade: Number(document.getElementById('idade').value),
     altura: Number(document.getElementById('altura').value),
@@ -138,7 +143,7 @@ function irParaLoading() {
     objetivo: document.getElementById('objetivo').value,
   };
 
-  if (!payload.nome || !payload.localTreino || !payload.objetivo) {
+  if (!payload.localTreino || !payload.objetivo) {
     console.error('Payload inválido:', payload);
     alert('Erro ao preparar dados. Por favor, tente novamente.');
     return;

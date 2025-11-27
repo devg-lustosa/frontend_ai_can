@@ -1,0 +1,166 @@
+/* styles/ajuda.css */
+
+.ajuda-content {
+    text-align: left;
+    margin-top: 20px;
+    line-height: 1.6;
+    color: #ddd;
+    font-size: 15px;
+    width: 100%;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.intro-text {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 16px;
+    color: #eee;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.section-title svg {
+    color: var(--cor-texto);
+}
+
+.section-title h3 {
+    color: var(--cor-texto);
+    font-size: 20px;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Feature List (Passo a Passo) */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-list li {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px;
+    border-radius: 10px;
+    transition: transform 0.2s ease, background 0.2s;
+}
+
+.feature-list li:hover {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: var(--cor-texto);
+    color: #000;
+    font-weight: bold;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.step-content strong {
+    display: block;
+    color: #fff;
+    margin-bottom: 4px;
+    font-size: 16px;
+}
+
+.step-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Check List (Funcionalidades) */
+.check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.check-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.check-list li svg {
+    color: var(--cor-texto);
+    flex-shrink: 0;
+    margin-top: 3px;
+}
+
+.check-list li span {
+    color: #ddd;
+    font-size: 15px;
+}
+
+.check-list li strong {
+    color: #fff;
+}
+
+/* Sobrescreve estilo do container apenas para esta página */
+.home-container {
+    max-width: 800px;
+    /* Largura maior para leitura */
+    width: 90%;
+    background-color: #111;
+    border-radius: 16px;
+    padding: 40px;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .home-container {
+        padding: 25px;
+    }
+
+    .section-title h3 {
+        font-size: 18px;
+    }
+
+    .feature-list li {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .step-number {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+    }
+}

@@ -3,16 +3,19 @@
   --cor-texto: #008fcb;
 }
 
-/* Corpo da página */
-body {
-  height: 100%;
+* {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+}
+
+/* Corpo da página */
+body {
+  font-family: 'Roboto', sans-serif;
   background-color: #000;
   color: #fff;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,15 +38,15 @@ body {
   width: 90%;
   min-width: 550px;
   max-width: 1300px;
-  width: auto;
   background-color: #111;
   border-radius: 16px;
   padding: 19px 30px;
-  max-height: 80vh;
-
+  max-height: 85vh;
   overflow-y: auto;
   overflow-x: hidden;
   margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid #222;
 }
 
 .container::-webkit-scrollbar {
@@ -83,27 +86,6 @@ body {
   width: 250px;
 }
 
-:root {
-  --cor-texto: #008fcb;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #000;
-  color: #fff;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 h2 {
   margin-bottom: 22px;
   text-align: center;
@@ -116,18 +98,6 @@ h3 {
   width: 100%;
   border-bottom: 1px solid #333;
   padding-bottom: 5px;
-}
-
-.bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0.1;
-  filter: brightness(1.0);
 }
 
 .loading-content {
@@ -160,8 +130,7 @@ h3 {
   margin-bottom: 25px;
 }
 
-/* ===== SISTEMA DE BOTÕES PADRONIZADO ===== */
-/* Estilo base para todos os botões */
+/* ===== SISTEMA DE BOTÕES PREMIUM ===== */
 button,
 .btn {
   font-family: 'Roboto', sans-serif;
@@ -169,12 +138,14 @@ button,
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: background-color 0.3s ease, transform 180ms ease-in-out, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   outline: none;
+  position: relative;
+  overflow: hidden;
 }
 
 button:focus-visible,
@@ -182,7 +153,6 @@ button:focus-visible,
   box-shadow: 0 0 0 3px rgba(0, 143, 203, 0.3);
 }
 
-/* Variante PRIMARY (padrão) */
 .btn,
 .btn-primary,
 button:not([class]) {
@@ -196,7 +166,8 @@ button:not([class]) {
 .btn-primary:hover,
 button:not([class]):hover {
   background-color: #0278aa;
-  transform: scale(1.08);
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 143, 203, 0.3);
 }
 
 .btn:active,
@@ -205,7 +176,7 @@ button:not([class]):active {
   transform: scale(0.98);
 }
 
-/* Variante VOLTAR (secundário) */
+/* Botão voltar */
 .btn-voltar {
   flex: 1;
   padding: 12px 16px;
@@ -217,14 +188,15 @@ button:not([class]):active {
 
 .btn-voltar:hover {
   background-color: #0278aa;
-  transform: scale(1.08);
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 143, 203, 0.3);
 }
 
 .btn-voltar:active {
   transform: scale(0.98);
 }
 
-/* Variante PDF */
+/* Botão PDF */
 .btn-pdf {
   flex: 1;
   padding: 12px 16px;
@@ -236,7 +208,8 @@ button:not([class]):active {
 
 .btn-pdf:hover {
   background-color: #0278aa;
-  transform: scale(1.08);
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 143, 203, 0.3);
 }
 
 .btn-pdf:active {
@@ -247,6 +220,43 @@ button:not([class]):active {
   opacity: 0.6;
   cursor: not-allowed;
   transform: scale(1);
+  box-shadow: none;
+}
+
+/* Botão de Logout - Canto inferior esquerdo */
+.btn-logout {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 12px 20px;
+  background-color: var(--cor-texto);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-logout:hover {
+  background-color: #0278aa;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 143, 203, 0.4);
+}
+
+.btn-logout:active {
+  transform: scale(0.98);
+}
+
+.btn-logout svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* Ações de loading */
@@ -262,6 +272,8 @@ button:not([class]):active {
   font-size: 12px;
   min-width: 120px;
 }
+
+/* Cards de treino */
 .treinos-scroll {
   display: flex;
   overflow-x: auto;
@@ -332,9 +344,6 @@ button:not([class]):active {
 
 .receita-bloco {
   width: 100%;
-}
-
-.receita-bloco {
   margin-bottom: 30px;
 }
 
@@ -398,7 +407,7 @@ button:not([class]):active {
   min-width: 120px;
 }
 
-/* ===== ESTILOS PARA MODAL DE PREVIEW ===== */
+/* Modal de preview */
 #previewModal {
   animation: fadeIn 0.3s ease-in;
 }
@@ -407,6 +416,7 @@ button:not([class]):active {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
