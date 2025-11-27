@@ -34,7 +34,7 @@ if (previewBtn) previewBtn.addEventListener('click', () => abrirPreviewPDF());
 function adicionarDelimitadoresPagina(conteudoPDF) {
     const altura = conteudoPDF.scrollHeight;
     const numPaginas = Math.ceil(altura / PDF_CONFIG.A4_HEIGHT_PX);
-    
+
     for (let i = 1; i < numPaginas; i++) {
         const posicao = PDF_CONFIG.A4_HEIGHT_PX * i;
         const delimitador = document.createElement('div');
@@ -72,7 +72,7 @@ function abrirPreviewPDF() {
     modal.style.cssText = PDF_CONFIG.STYLES.modal.base;
 
     const conteudoPreview = gerarConteudoPDF(plano);
-    
+
     const container = document.createElement('div');
     container.style.cssText = PDF_CONFIG.STYLES.modal.container;
 
@@ -82,7 +82,7 @@ function abrirPreviewPDF() {
 
     const altura = previewContent.scrollHeight;
     const numPaginas = Math.ceil(altura / PDF_CONFIG.A4_HEIGHT_PX);
-    
+
     if (numPaginas > 1) {
         const indicador = document.createElement('div');
         indicador.style.cssText = `
@@ -165,15 +165,20 @@ function gerarPDFCompleto(e, comDelimitadores = true) {
         adicionarDelimitadoresPagina(conteudoPDF);
     }
 
-    const safeName = (plano?.nome_da_rotina || 'Plano de Treino AICAN')
-        .replace(/[^\x00-\x7F]+/g, '')
-        .replace(/[\/\?%*:|"<>]/g, '')
+    const safeName = (plano?.nome_da_rotina || 'Plano_de_Treino_AICAN')
+        .replace(/[^\w\s-]/g, '')
         .trim()
         .replace(/\s+/g, '_');
 
+    const agora = new Date();
+    const dia = agora.getDate().toString().padStart(2, '0');
+    const mes = (agora.getMonth() + 1).toString().padStart(2, '0');
+    const ano = agora.getFullYear();
+
+    const nomeArquivo = `Treino_AICAN_${safeName}_${dia}_${mes}_${ano}.pdf`;
+
     const opt = {
         margin: 10,
-        filename: `Treino_AICAN_${safeName}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -191,7 +196,10 @@ function gerarPDFCompleto(e, comDelimitadores = true) {
         return;
     }
 
-    html2pdf().set(opt).from(conteudoPDF).save()
+    html2pdf()
+        .from(conteudoPDF)
+        .set(opt)
+        .save(nomeArquivo)
         .then(() => {
             if (btn) btn.textContent = textoOriginal;
         })
@@ -205,16 +213,16 @@ function gerarPDFCompleto(e, comDelimitadores = true) {
 function converterURLsEmLinks(texto, cor = PDF_CONFIG.PRIMARY_COLOR) {
     if (!texto) return texto;
     if (typeof texto !== 'string') texto = String(texto);
-    
+
     const urlPattern = /(https?:\/\/[^\s<>"{}|\\^`\[\]]+|www\.[^\s<>"{}|\\^`\[\]]+)/gi;
-    
+
     return texto.replace(urlPattern, (url) => {
         let urlLimpa = url.replace(/[.,;:!?)\]]+$/, '');
-        
+
         if (urlLimpa.startsWith('www.')) {
             urlLimpa = 'https://' + urlLimpa;
         }
-        
+
         return `<span style="color: ${cor}; text-decoration: underline; font-weight: 600; word-break: break-all;">${urlLimpa}</span>`;
     });
 }
@@ -241,7 +249,7 @@ function gerarConteudoPDF(plano) {
             if (dia.exercicios) {
                 dia.exercicios.forEach(ex => {
                     const detalhesComLinks = converterURLsEmLinks(ex.detalhes_execucao, primaryColor);
-                    
+
                     htmlContent += `
             <div style="margin-bottom: 10px; padding-left: 10px; border-left: 3px solid #eee;">
               <strong style="font-size: 14px;">${ex.nome}</strong>
@@ -251,14 +259,14 @@ function gerarConteudoPDF(plano) {
               <div style="font-size: 11px; color: #666; font-style: italic; margin-bottom: 5px;">
                 ${detalhesComLinks}
               </div>`;
-                    
+
                     if (ex.video_url) {
                         const videoUrlFormatado = converterURLsEmLinks(ex.video_url, primaryColor);
                         htmlContent += `<div style="font-size: 11px; padding: 6px 8px; background: #e3f2fd; border-radius: 3px; border-left: 3px solid ${primaryColor}; margin-top: 5px;">
                 <strong style="color: ${primaryColor};">Vídeo:</strong> ${videoUrlFormatado}
               </div>`;
                     }
-                    
+
                     htmlContent += `</div>`;
                 });
             }
@@ -274,7 +282,7 @@ function gerarConteudoPDF(plano) {
         let html = `<h4 style="margin-top: 20px; color: #333;">${titulo}</h4>`;
         Object.values(lista).forEach(item => {
             const explicacaoComLinks = converterURLsEmLinks(item.explicacao, primaryColor);
-            
+
             html += `
         <div style="background: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
           <strong style="color: ${primaryColor};">${item.nome}</strong>
@@ -282,13 +290,12 @@ function gerarConteudoPDF(plano) {
             ${item.ingredientes.map(ing => `<li>${ing}</li>`).join('')}
           </ul>
           <p style="font-size: 12px; margin: 0; margin-bottom: 8px;">${explicacaoComLinks}</p>`;
-            
-            // Usa o campo link_receita diretamente
+
             if (item.link_receita) {
                 const linkFormatado = converterURLsEmLinks(item.link_receita, primaryColor);
                 html += `<div style="margin-top: 5px; font-size: 12px; font-weight: 600;">🔗 ${linkFormatado}</div>`;
             }
-            
+
             html += `</div>`;
         });
         return html;

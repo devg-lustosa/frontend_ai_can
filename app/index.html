@@ -1,51 +1,75 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google Fonts: Roboto -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="home.css" />
-    <link rel="icon" href="./assets/favicon.png" type="image/x-icon" />
-    <title>Home | AICAN</title>
-  </head>
 
-  <body>
-    <!-- Vídeo de fundo -->
-    <video autoplay muted loop playsinline class="bg-video">
-      <source src="./assets/gym.fundo.mp4" type="video/mp4" />
-      Seu navegador não suporta vídeo HTML 5
-    </video>
-    <div class="video-overlay"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Fonts: Roboto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="home.css" />
+  <link rel="icon" href="./assets/favicon.png" type="image/x-icon">
+  <title>Login | AICAN</title>
+</head>
 
-    <!-- Box central -->
-    <div class="home-container">
-      <div class="home-box">
-        <!-- Logo -->
-        <img src="./assets/logo.aican.png" alt="Logo AICAN" class="logo" />
+<body>
+  <!-- Vídeo de fundo -->
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="./assets/gym.fundo.mp4" type="video/mp4" />
+    Seu navegador não suporta vídeo HTML 5
+  </video>
+  <div class="video-overlay"></div>
 
-        <!-- Texto principal -->
-        <h2>Bem-vindo</h2>
-        <p class="descricao" id="descricao">
-          Um guia de exercícios e nutrição. Você nos diz onde quer chegar, e
-          nossa IA sugere o caminho.
-        </p>
+  <!-- Box central -->
+  <div class="home-container">
+    <div class="home-box">
+      <!-- Logo -->
+      <img src="./assets/logo.aican.png" alt="Logo AICAN" class="logo" />
 
-        <!-- Botão de ação -->
-        <a href="./view/solicitar-lista.html" class="btn-home">Começar agora</a>
+      <!-- Mensagem de Boas-vindas e Descrição Dinâmica -->
+      <h2 style="margin-bottom: 10px; color: var(--cor-texto);">Bem-vindo</h2>
+      <div class="descricao" id="descricao" style="min-height: 60px; margin-bottom: 20px;"></div>
 
-        <!-- Link de ajuda -->
-        <a href="./view/ajuda.html" class="link-ajuda"
-          >Entenda como a IA ajuda você.</a
-        >
+      <!-- Container de Formulários -->
+      <div class="auth-container">
+
+        <!-- Formulário de Login -->
+        <div id="login-form" class="auth-form">
+          <form id="form-login">
+            <div class="input-group">
+              <input type="email" id="login-email" placeholder="Seu e-mail" required />
+            </div>
+            <div class="input-group password-group">
+              <input type="password" id="login-password" placeholder="Sua senha" required />
+              <button type="button" class="toggle-password" onclick="togglePassword('login-password', this)"
+                aria-label="Mostrar/Esconder senha">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            <button type="submit" class="btn-home full-width">Entrar</button>
+          </form>
+          <p class="auth-switch">
+            Ainda não tem conta? <a href="./view/cadastro.html">Cadastre-se</a>
+          </p>
+        </div>
+
+        <div id="auth-message" class="message hidden"></div>
       </div>
+
+      <!-- Link de ajuda -->
+      <a href="./view/ajuda.html" class="link-ajuda">Entenda como a IA ajuda você.</a>
     </div>
-    <script src="./scripts/functions.js"></script>
-    <script src="./scripts/home.js"></script>
-  </body>
+  </div>
+
+  <script src="./scripts/api.js"></script>
+  <script src="./scripts/home.js"></script>
+  <script src="./scripts/login.js"></script>
+</body>
+
 </html>

@@ -1,14 +1,38 @@
-/* Base (duplicated per file as requested) */
+/* styles/solicitar-lista.css */
+
 :root {
   --cor-texto: #008fcb;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-body { font-family: 'Roboto', sans-serif; background-color: #000; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #000;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
 
 /* Vídeo de fundo */
-.bg-video { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1; opacity: 0.1; filter: brightness(1.0); }
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.1;
+  filter: brightness(1.0);
+}
 
 /* Reset de inputs numéricos */
 input[type="number"]::-webkit-inner-spin-button,
@@ -21,35 +45,56 @@ input[type="number"] {
   appearance: textfield;
 }
 
-/* Container principal com scroll interno */
+/* ===== GLOBAL ANIMATIONS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Container principal */
 .container {
   width: 90%;
   max-width: 600px;
   background-color: #111;
   border-radius: 16px;
-  padding: 19px 30px;
-  max-height: 80vh;
+  padding: 30px;
+  max-height: 85vh;
   overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid #222;
+  animation: fadeIn 0.6s ease-out;
 }
 
-/* Box de conteúdo */
 .form-box {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
-/* Logo */
 .logo-container {
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   width: 100%;
   text-align: center;
 }
 
 .logo {
-  width: 250px;
+  width: 220px;
+  transition: transform 0.3s ease;
 }
 
+.logo:hover {
+  transform: scale(1.02);
+}
+
+/* Scrollbar Customizada */
 .container::-webkit-scrollbar {
   width: 8px;
 }
@@ -60,45 +105,49 @@ input[type="number"] {
 }
 
 .container::-webkit-scrollbar-thumb {
-  background-color: var(--cor-texto);
+  background-color: #333;
   border-radius: 8px;
   border: 2px solid #111;
 }
 
-/* Firefox */
+.container::-webkit-scrollbar-thumb:hover {
+  background-color: var(--cor-texto);
+}
+
 .container {
   scrollbar-width: thin;
-  scrollbar-color: var(--cor-texto) #111;
+  scrollbar-color: #333 #111;
 }
 
 /* Títulos */
 h2 {
-  margin-bottom: 16px;
+  margin-bottom: 25px;
   font-weight: 700;
   text-align: center;
   width: 100%;
-}
-
-h3 {
-  font-size: 18px;
-  margin-top: 30px;
-  margin-bottom: 10px;
+  color: var(--cor-texto);
+  font-size: 22px;
+  letter-spacing: 0.5px;
 }
 
 /* Inputs e selects */
 .input-group {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   position: relative;
-  min-height: 90px;
 }
 
 .input-group label {
   display: block;
   margin-bottom: 8px;
-  color: var(--cor-texto);
+  color: #ccc;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 15px;
+  transition: color 0.3s;
+}
+
+.input-group:focus-within label {
+  color: var(--cor-texto);
 }
 
 .input-group input,
@@ -106,21 +155,28 @@ h3 {
   width: 100%;
   padding: 12px 16px;
   border-radius: 8px;
-  border: 1px solid #555;
-  background-color: #222;
+  border: 1px solid #444;
+  background-color: #1a1a1a;
   color: #fff;
   outline: none;
-  transition: border 0.3s;
+  transition: all 0.3s ease;
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
 }
 
 .input-group input:focus,
 .input-group select:focus {
-  border: 1px solid var(--cor-texto);
+  border-color: var(--cor-texto);
+  background-color: #222;
+  box-shadow: 0 0 0 2px rgba(0, 143, 203, 0.1);
+}
+
+.input-group input::placeholder {
+  color: #555;
 }
 
 /* ===== SISTEMA DE BOTÕES PADRONIZADO ===== */
-/* Estilo base para todos os botões */
 button,
 .btn {
   font-family: 'Roboto', sans-serif;
@@ -128,12 +184,14 @@ button,
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: background-color 0.3s ease, transform 180ms ease-in-out, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   outline: none;
+  position: relative;
+  overflow: hidden;
 }
 
 button:focus-visible,
@@ -141,34 +199,12 @@ button:focus-visible,
   box-shadow: 0 0 0 3px rgba(0, 143, 203, 0.3);
 }
 
-/* Variante PRIMARY (padrão) */
-.btn,
-.btn-primary,
-button:not([class]) {
-  padding: 12px 20px;
-  background-color: var(--cor-texto);
-  color: #000;
-  font-size: 14px;
-}
-
-.btn:hover,
-.btn-primary:hover,
-button:not([class]):hover {
-  background-color: #0278aa;
-  transform: scale(1.08);
-}
-
-.btn:active,
-.btn-primary:active,
-button:not([class]):active {
-  transform: scale(0.98);
-}
-
-/* Variante SUBMIT (formulários) */
+/* Variante SUBMIT */
 .btn-submit {
   width: 100%;
   padding: 14px;
-  margin-bottom: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   background-color: var(--cor-texto);
   color: #000;
   font-weight: 600;
@@ -177,7 +213,8 @@ button:not([class]):active {
 
 .btn-submit:hover {
   background-color: #0278aa;
-  transform: scale(1.08);
+  transform: scale(1.02);
+  box-shadow: 0 5px 15px rgba(0, 143, 203, 0.2);
 }
 
 .btn-submit:active {
@@ -185,38 +222,46 @@ button:not([class]):active {
 }
 
 .btn-submit:disabled {
-  opacity: 0.6;
+  opacity: 0.7;
   cursor: not-allowed;
   transform: scale(1);
+  box-shadow: none;
 }
 
-/* Variante VOLTAR */
-.btn-voltar {
-  flex: 1;
-  padding: 12px 16px;
+/* Botão de Logout - CANTO INFERIOR ESQUERDO */
+.btn-logout {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 12px 20px;
   background-color: var(--cor-texto);
   color: #000;
-  font-weight: 600;
+  border: none;
+  border-radius: 8px;
   font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.btn-voltar:hover {
+.btn-logout:hover {
   background-color: #0278aa;
-  transform: scale(1.08);
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 143, 203, 0.4);
 }
 
-.btn-voltar:active {
+.btn-logout:active {
   transform: scale(0.98);
 }
 
-/* Mensagens de erro */
-.error-message {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  color: #ff4d4d;
-  font-size: 14px;
-  margin-top: 5px;
+.btn-logout svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* Loading */
@@ -225,13 +270,14 @@ button:not([class]):active {
   flex-direction: column;
   align-items: center;
   margin-top: 30px;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .circular-loader {
-  width: 60px;
-  height: 60px;
-  border: 6px solid #333;
-  border-top: 6px solid var(--cor-texto);
+  width: 50px;
+  height: 50px;
+  border: 5px solid #333;
+  border-top: 5px solid var(--cor-texto);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 20px;
@@ -244,16 +290,18 @@ button:not([class]):active {
 }
 
 .loading-text {
-  color: #fff;
+  color: #ddd;
   font-weight: 500;
   margin-bottom: 25px;
+  font-size: 16px;
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
   .container {
     width: 95%;
-    padding: 15px 20px;
+    padding: 20px;
+    max-height: 90vh;
   }
 
   .logo {
@@ -262,5 +310,16 @@ button:not([class]):active {
 
   h2 {
     font-size: 20px;
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+  }
+
+  .btn-logout {
+    bottom: 15px;
+    left: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
   }
 }
