@@ -2,9 +2,26 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const cadastroForm = document.getElementById('form-cadastro');
+    const passwordInput = document.getElementById('register-password');
+    const passwordHint = document.getElementById('password-hint');
 
     if (cadastroForm) {
         cadastroForm.addEventListener('submit', handleRegister);
+    }
+
+    if (passwordInput && passwordHint) {
+        passwordInput.addEventListener('focus', () => {
+            passwordHint.classList.remove('hidden');
+            passwordHint.style.display = 'block';
+        });
+
+        passwordInput.addEventListener('blur', () => {
+            // Só esconde se o campo estiver vazio
+            if (!passwordInput.value) {
+                passwordHint.classList.add('hidden');
+                passwordHint.style.display = 'none';
+            }
+        });
     }
 });
 
@@ -37,14 +54,67 @@ async function handleRegister(event) {
     messageDiv.className = 'message hidden';
     messageDiv.textContent = '';
 
-    // Validação básica
-    if (password.length < 6) {
+    // Validação de NOME (apenas letras e espaços)
+    const nomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
+    if (!nome || nome.trim().length < 3) {
+        messageDiv.textContent = 'O nome deve ter pelo menos 3 caracteres.';
+        messageDiv.className = 'message error';
+        messageDiv.classList.remove('hidden');
+        return;
+    }
+
+    if (!nomeRegex.test(nome)) {
+        messageDiv.textContent = 'O nome não pode conter números ou caracteres especiais.';
+        messageDiv.className = 'message error';
+        messageDiv.classList.remove('hidden');
+        return;
+    }
+
+    if (nome.length > 100) {
+        messageDiv.textContent = 'O nome não pode ter mais de 100 caracteres.';
+        messageDiv.className = 'message error';
+        messageDiv.classList.remove('hidden');
+        return;
+    }
+
+    // Validação de EMAIL
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+        messageDiv.textContent = 'Digite um e-mail válido.';
+        messageDiv.className = 'message error';
+        messageDiv.classList.remove('hidden');
+        return;
+    }
+
+    // Validação de SENHA
+    if (!password || password.length < 6) {
         messageDiv.textContent = 'A senha deve ter pelo menos 6 caracteres.';
         messageDiv.className = 'message error';
         messageDiv.classList.remove('hidden');
         return;
     }
 
+    if (password.length > 100) {
+        messageDiv.textContent = 'A senha não pode ter mais de 100 caracteres.';
+        messageDiv.className = 'message error';
+        messageDiv.classList.remove('hidden');
+        return;
+    }
+
+    // Validação de FORÇA DA SENHA
+    const temMaiuscula = /[A-Z]/.test(password);
+    const temMinuscula = /[a-z]/.test(password);
+    const temNumero = /[0-9]/.test(password);
+    const temEspecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+    if (!temMaiuscula || !temMinuscula || !temNumero || !temEspecial) {
+        messageDiv.textContent = 'A senha deve conter: maiúscula, minúscula, número e caractere especial (!@#$%...).';
+        messageDiv.className = 'message error';
+        messageDiv.classList.remove('hidden');
+        return;
+    }
+
+    // Validação de CONFIRMAÇÃO DE SENHA
     if (password !== confirmPassword) {
         messageDiv.textContent = 'As senhas não coincidem.';
         messageDiv.className = 'message error';
