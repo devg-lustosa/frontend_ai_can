@@ -328,8 +328,10 @@ Projeto acadêmico para fins educacionais.
 
 ## 👥 Autores
 
-- **João Victor Carvalho** - Backend & Frontend - [GitHub](https://github.com/joaokrv)
+- **João Victor Carvalho** - Backend & Frontend & DB - [GitHub](https://github.com/joaokrv)
 - **Guilherme Lustosa** - Frontend - [GitHub](https://github.com/devg-lustosa)
+- **André Toledo** - Frontend [Github](https://github.com/AndreToledoo)
+- **Marcelo Gutemberg** - Frontend
 
 ---
 
