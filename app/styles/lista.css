@@ -18,49 +18,33 @@
 /* Corpo da página */
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #000;
+  background-color: #050505;
   color: #fff;
   height: 100vh;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow-x: hidden;
-  /* Evita scroll lateral na janela inteira */
-  /* overflow-y é gerenciado via media queries */
 }
 
-/* =========================================
-   BACKGROUND VIDEO
-   ========================================= */
+/* Vídeo de fundo */
 .bg-video {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
   z-index: -1;
-  opacity: 0.1;
-  filter: brightness(1);
+  opacity: 0.3;
+  filter: brightness(0.7);
 }
 
-/* =========================================
-   CONTAINER PRINCIPAL (O "CARTÃO")
-   ========================================= */
-.container {
-  width: 90%;
-  min-width: 550px;
-  max-width: 1300px;
-  background-color: #111;
-  border-radius: 16px;
-  padding: 19px 30px;
-  max-height: 85vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin: 0 auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  border: 1px solid #222;
+/* Ocultar vídeo no mobile */
+@media (max-width: 768px) {
+  .bg-video {
+    display: none;
+  }
 }
 
 /* Estilização da barra de rolagem */
@@ -82,6 +66,29 @@ body {
 .container {
   scrollbar-width: thin;
   scrollbar-color: var(--cor-texto) #111;
+  position: relative;
+  z-index: 1;
+  width: 90%;
+  max-width: 1300px;
+  background-color: #111;
+  /* Ensure background is dark */
+  border-radius: 16px;
+  padding: 19px 30px;
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid #222;
+}
+
+/* Ajuste para monitores em modo retrato (Vertical) */
+@media (min-width: 768px) and (orientation: portrait) {
+  .container {
+    max-width: 90%;
+    max-height: 90vh;
+    margin-top: 0;
+  }
 }
 
 .form-box {
@@ -512,3 +519,4 @@ button:not([class]):active {
       opacity: 1;
     }
   }
+}
