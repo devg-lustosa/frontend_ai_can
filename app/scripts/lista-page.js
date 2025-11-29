@@ -202,10 +202,14 @@ function mostrarLista(plano) {
   plano.dias_de_treino.forEach((treino, idx) => {
     const card = document.createElement('div');
     card.classList.add('treino-card');
-    card.innerHTML = `
-      ${treino.identificacao}
-      <span>${treino.foco_muscular}</span>
-    `;
+
+    const idSpan = document.createTextNode(treino.identificacao);
+    const focoSpan = document.createElement('span');
+    focoSpan.textContent = treino.foco_muscular;
+
+    card.appendChild(idSpan);
+    card.appendChild(focoSpan);
+
     card.onclick = () => mostrarDetalhesDay(idx, plano.dias_de_treino);
     diasScroll.appendChild(card);
   });
@@ -237,18 +241,40 @@ function mostrarLista(plano) {
 
   const preBloco = document.createElement('div');
   preBloco.classList.add('receita-bloco');
-  preBloco.innerHTML = `<div class="receita-tipo">Sugestões Pré-Treino</div>`;
+  const preBlocoTitleDiv = document.createElement('div');
+  preBlocoTitleDiv.classList.add('receita-tipo');
+  preBlocoTitleDiv.textContent = 'Sugestões Pré-Treino';
+  preBloco.appendChild(preBlocoTitleDiv);
 
   if (plano.sugestoes_nutricionais.pre_treino) {
     Object.values(plano.sugestoes_nutricionais.pre_treino).forEach((r) => {
       const card = document.createElement('div');
       card.classList.add('receita-card');
-      card.innerHTML = `
-        <h4>${r.nome}</h4>
-        <ul>${r.ingredientes.map(ing => `<li>${ing}</li>`).join('')}</ul>
-        <p><strong>${r.explicacao}</strong></p>
-        <a href="${r.link_receita}" target="_blank">Ver receita completa</a>
-      `;
+
+      const h4 = document.createElement('h4');
+      h4.textContent = r.nome;
+      card.appendChild(h4);
+
+      const ul = document.createElement('ul');
+      r.ingredientes.forEach(ing => {
+        const li = document.createElement('li');
+        li.textContent = ing;
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+
+      const p = document.createElement('p');
+      const strong = document.createElement('strong');
+      strong.textContent = r.explicacao;
+      p.appendChild(strong);
+      card.appendChild(p);
+
+      const a = document.createElement('a');
+      a.href = r.link_receita;
+      a.target = "_blank";
+      a.textContent = "Ver receita completa";
+      card.appendChild(a);
+
       preBloco.appendChild(card);
     });
   }
@@ -256,18 +282,40 @@ function mostrarLista(plano) {
 
   const posBloco = document.createElement('div');
   posBloco.classList.add('receita-bloco');
-  posBloco.innerHTML = `<div class="receita-tipo">Sugestões Pós-Treino</div>`;
+  const posBlocoTitleDiv = document.createElement('div');
+  posBlocoTitleDiv.classList.add('receita-tipo');
+  posBlocoTitleDiv.textContent = 'Sugestões Pós-Treino';
+  posBloco.appendChild(posBlocoTitleDiv);
 
   if (plano.sugestoes_nutricionais.pos_treino) {
     Object.values(plano.sugestoes_nutricionais.pos_treino).forEach((r) => {
       const card = document.createElement('div');
       card.classList.add('receita-card');
-      card.innerHTML = `
-        <h4>${r.nome}</h4>
-        <ul>${r.ingredientes.map(ing => `<li>${ing}</li>`).join('')}</ul>
-        <p><strong>${r.explicacao}</strong></p>
-        <a href="${r.link_receita}" target="_blank">Ver receita completa</a>
-      `;
+
+      const h4 = document.createElement('h4');
+      h4.textContent = r.nome;
+      card.appendChild(h4);
+
+      const ul = document.createElement('ul');
+      r.ingredientes.forEach(ing => {
+        const li = document.createElement('li');
+        li.textContent = ing;
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+
+      const p = document.createElement('p');
+      const strong = document.createElement('strong');
+      strong.textContent = r.explicacao;
+      p.appendChild(strong);
+      card.appendChild(p);
+
+      const a = document.createElement('a');
+      a.href = r.link_receita;
+      a.target = "_blank";
+      a.textContent = "Ver receita completa";
+      card.appendChild(a);
+
       posBloco.appendChild(card);
     });
   }
@@ -280,23 +328,42 @@ function mostrarDetalhesDay(index, dias) {
 
   if (!detalhesDiv) return;
 
-  detalhesDiv.innerHTML = `<h3>${treino.identificacao} - ${treino.foco_muscular}</h3>`;
+  detalhesDiv.innerHTML = '';
+
+  const h3 = document.createElement('h3');
+  h3.textContent = `${treino.identificacao} - ${treino.foco_muscular}`;
+  detalhesDiv.appendChild(h3);
 
   if (treino.exercicios && treino.exercicios.length > 0) {
     treino.exercicios.forEach((ex) => {
       const exDiv = document.createElement('div');
       exDiv.classList.add('exercicio');
-      exDiv.innerHTML = `
-        <strong>${ex.nome}</strong>
-        Séries: ${ex.series} | Repetições: ${ex.repeticoes} | Descanso: ${ex.descanso_segundos}s
-        <br><small>${ex.detalhes_execucao}</small>
-        <br><a href="${ex.video_url}" target="_blank">Ver vídeo</a>
-      `;
+
+      const strong = document.createElement('strong');
+      strong.textContent = ex.nome;
+      exDiv.appendChild(strong);
+
+      const infoText = document.createTextNode(` Séries: ${ex.series} | Repetições: ${ex.repeticoes} | Descanso: ${ex.descanso_segundos}s`);
+      exDiv.appendChild(infoText);
+
+      exDiv.appendChild(document.createElement('br'));
+
+      const small = document.createElement('small');
+      small.textContent = ex.detalhes_execucao;
+      exDiv.appendChild(small);
+
+      exDiv.appendChild(document.createElement('br'));
+
+      const a = document.createElement('a');
+      a.href = ex.video_url;
+      a.target = "_blank";
+      a.textContent = "Ver vídeo";
+      exDiv.appendChild(a);
+
       detalhesDiv.appendChild(exDiv);
     });
   }
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(carregarPlanoTreino, 300);
