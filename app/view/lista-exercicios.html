@@ -5,13 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minha Lista | AICAN</title>
-  <!-- Google Fonts: Roboto -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" />
   <link rel="stylesheet" href="../styles/lista.css" />
-  <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+  <link rel="icon" href="../assets/favicon.png" type="image/x-icon" />
 </head>
 
 <body>
@@ -31,7 +30,7 @@
     Sair
   </button>
 
-  <div class="container">
+  <main class="container">
     <div class="form-box">
       <div class="logo-container">
         <img src="../assets/logo.aican.png" alt="Logo Aican" class="logo" />
@@ -41,9 +40,11 @@
 
       <div class="loading-content" id="loading">
         <div class="circular-loader" aria-hidden="true"></div>
-        <p class="loading-text" id="loadingText">Aguarde alguns instantes — estamos preparando sua rotina</p>
+        <p class="loading-text" id="loadingText">
+          Aguarde alguns instantes — estamos preparando sua rotina
+        </p>
 
-        <div class="loading-actions" id="loadingActions" style="display: none;">
+        <div class="loading-actions" id="loadingActions">
           <button id="btnRetry" class="btn-voltar">Tentar novamente</button>
           <button id="btnBack" class="btn-voltar">Voltar e refazer</button>
         </div>
@@ -51,8 +52,11 @@
 
       <div id="conteudoLista" style="display: none">
         <div class="treinos-scroll" id="diasTreino"></div>
+
         <div id="treinoDetalhado" class="treino-detalhado"></div>
-        <div id="receitas"></div>
+
+        <div id="receitas" class="receita"></div>
+
         <div class="botoes-final">
           <button class="btn-voltar" onclick="voltarParaFormulario()">
             Refazer Lista
@@ -62,14 +66,13 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <script src="../scripts/functions.js"></script>
   <script src="../scripts/api.js"></script>
   <script src="../scripts/lista-page.js"></script>
   <script src="../scripts/pdf-generator.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 </body>
 
 </html>

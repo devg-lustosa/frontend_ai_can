@@ -11,8 +11,8 @@ Desenvolvido com foco em:
 - 📝 **Formulários inteligentes** com validação em tempo real
 - 🎬 **Visualização dinâmica** de planos de treino com vídeos explicativos
 - 🍽️ **Sugestões nutricionais** personalizadas (pré e pós-treino)
-- 📄 **Exportação em PDF** com nome descritivo
-- 💾 **Persistência local** com expiração automática
+- 📄 **Exportação em PDF** otimizada para desktop e mobile
+- 💾 **Persistência local** com expiração automática e validação de integridade
 
 ---
 
@@ -24,10 +24,10 @@ O frontend foi desenvolvido com **JavaScript Vanilla** seguindo uma arquitetura 
 |-----------|-----------|
 | **HTML5** | Markup semântico, validação nativa, acessibilidade |
 | **CSS3** | Variáveis CSS, Grid/Flexbox, animações, design premium |
-| **JavaScript Vanilla** | Sem frameworks, código otimizado, validação robusta |
-| **LocalStorage API** | Cache inteligente com metadados e expiração (24h) |
+| **JavaScript Vanilla** | Módulos ES6, código otimizado, validação robusta |
+| **StorageManager** | Classe gerenciadora de localStorage com metadados e expiração |
 | **Fetch API** | Comunicação assíncrona com backend, tratamento de erros |
-| **html2pdf.js** | Geração de PDF client-side com formatação customizada |
+| **html2pdf.js** | Geração de PDF client-side otimizada para mobile |
 
 ---
 
@@ -39,34 +39,37 @@ frontend/
 ├── LICENSE
 │
 └── app/
+    ├── index.html             # Página de login
+    ├── home.css               # Estilos da página de login
+    │
     ├── assets/
     │   ├── favicon.png        # Ícone do site
     │   ├── logo.aican.png     # Logo (250x250px)
     │   └── gym.fundo.mp4      # Vídeo de fundo
     │
     ├── view/
-    │   ├── index.html         # Login/Registro
-    │   ├── cadastro.html      # Página de cadastro
-    │   ├── ajuda.html         # FAQ e informações
-    │   ├── solicitar-lista.html    # Formulário de treino
-    │   └── lista-exercicios.html   # Exibição de resultados
+    │   ├── cadastro.html          # Página de cadastro
+    │   ├── ajuda.html             # FAQ e informações
+    │   ├── solicitar-lista.html   # Formulário de treino
+    │   └── lista-exercicios.html  # Exibição de resultados
     │
     ├── styles/
-    │   ├── home.css           # Estilos login/registro
-    │   ├── cadastro.css       # Estilos do cadastro
-    │   ├── ajuda.css          # Estilos da página de ajuda
-    │   ├── solicitar-lista.css     # Estilos do formulário
-    │   └── lista.css          # Estilos da lista de treinos
+    │   ├── cadastro.css           # Estilos do cadastro
+    │   ├── ajuda.css              # Estilos da página de ajuda
+    │   ├── solicitar-lista.css    # Estilos do formulário
+    │   └── lista.css              # Estilos da lista de treinos
     │
     └── scripts/
-        ├── api.js             # Comunicação com backend
-        ├── functions.js       # Funções globais (logout, etc)
-        ├── home.js            # Animações da landing page
-        ├── login.js           # Lógica de autenticação
-        ├── cadastro.js        # Lógica de registro
-        ├── solicitar-lista.js # Validação do formulário
-        ├── lista-page.js      # Renderização dos treinos
-        └── pdf-generator.js   # Geração de PDF
+        ├── api.js                 # Comunicação com backend (Fetch API)
+        ├── functions.js           # Funções globais (logout, localStorage helpers)
+        ├── validators.js          # Validações de formulários
+        ├── storage-manager.js     # Classe StorageManager (localStorage avançado)
+        ├── home.js                # Animações da landing page
+        ├── login.js               # Lógica de autenticação
+        ├── cadastro.js            # Lógica de registro
+        ├── solicitar-lista.js     # Validação e envio do formulário
+        ├── lista-page.js          # Renderização dos treinos
+        └── pdf-generator.js       # Geração de PDF (mobile-friendly)
 ```
 
 ---
@@ -116,6 +119,7 @@ python -m http.server 5500
 - 🏠 **Home/Login**: `http://localhost:5500/app/index.html`
 - 📝 **Cadastro**: `http://localhost:5500/app/view/cadastro.html`
 - 🏋️ **Solicitar Lista**: `http://localhost:5500/app/view/solicitar-lista.html`
+- ❓ **Ajuda/FAQ**: `http://localhost:5500/app/view/ajuda.html`
 
 ---
 
@@ -141,29 +145,43 @@ python -m http.server 5500
 
 ### 🏋️ **Exibição de Planos**
 
-- **Loading inteligente** com mensagens de status
+- **Loading inteligente** com mensagens de status dinâmicas
 - **Navegação por dias** de treino (cards clicáveis)
 - **Detalhes de exercícios**: nome, séries, reps, descanso, vídeo
-- **Sugestões nutricionais**: pré e pós-treino com receitas
+- **Sugestões nutricionais**: pré e pós-treino (opções econômica, equilibrada e premium)
 - **Botão "Refazer Lista"** que limpa cache e retorna ao formulário
 
 ### 📄 **Geração de PDF**
 
-- **Preview antes de gerar**: visualiza quantas páginas terá
+- **Compatibilidade mobile**: Renderização otimizada para dispositivos móveis
+- **Preview interativo**: Modal com informações do PDF e opções
+- **Fechar modal**: Clique fora do modal, tecla ESC ou botão X
 - **Nome descritivo**: `Treino_AICAN_<nome_do_plano>_DD_MM_AAAA.pdf`
-- **Formatação premium**: cores customizadas, logos, links clicáveis
-- **Links funcionais**: URLs de vídeos e receitas sublinhados
+- **Formatação premium**: Cores customizadas (#008fcb), links clicáveis
+- **Seções completas**: Exercícios por dia + Nutrição (pré e pós-treino)
+- **Links funcionais**: URLs de vídeos do YouTube e receitas do Google
 
-### 💾 **Gerenciamento de Dados**
+### 💾 **Gerenciamento de Dados (StorageManager)**
 
 ```javascript
-const STORAGE_CONFIG = {
-  PLAN_KEY: 'aican_resposta',      // Dados do plano
-  METADATA_KEY: 'aican_metadata',  // Metadados (timestamp, hash)
-  TOKEN_KEY: 'token',              // JWT do usuário
-  USER_NAME: 'user_name',          // Nome do usuário
-  EXPIRATION_HOURS: 24             // Cache expira em 24h
+// Classe StorageManager - Gerenciamento avançado de localStorage
+StorageManager.CONFIG = {
+  PLAN_KEY: 'aican_resposta',        // Dados do plano
+  METADATA_KEY: 'aican_metadata',    // Metadados (timestamp, hash)
+  SOLICITACAO_KEY: 'aican_solicitacao', // Dados da solicitação pendente
+  TOKEN_KEY: 'token',                // JWT do usuário
+  USER_NAME: 'user_name',            // Nome do usuário
+  EXPIRATION_HOURS: 24,              // Cache expira em 24h
+  MAX_SIZE_KB: 800                   // Limite de tamanho por item
 };
+
+// Métodos principais
+StorageManager.save(key, data)       // Salvar com metadados
+StorageManager.load(key)             // Carregar com validação de expiração
+StorageManager.remove(key)           // Remover item e metadados
+StorageManager.isExpired(key)        // Verificar expiração
+StorageManager.getStorageInfo()      // Informações de uso
+StorageManager.cleanExpired()        // Limpar dados expirados (auto)
 ```
 
 ---
@@ -173,6 +191,7 @@ const STORAGE_CONFIG = {
 ### Padrão Visual Premium
 
 - **Cor principal**: `#008fcb` (azul vibrante)
+- **Cor hover**: `#0278aa` (azul escuro)
 - **Fundo**: Vídeo de academia em loop (opacidade 10%)
 - **Glassmorphism**: Containers com backdrop-filter
 - **Animações suaves**: Fade-in, scale on hover, glow effects
@@ -183,7 +202,7 @@ const STORAGE_CONFIG = {
 ```css
 /* Mobile-first approach */
 @media (max-width: 768px) {
-  /* Ajustes para mobile */
+  /* Ajustes para mobile - PDF usa scale menor */
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -191,11 +210,12 @@ const STORAGE_CONFIG = {
 }
 ```
 
-### Botão de Logout
+### Modal de PDF
 
-- Posição: **Bottom-left** (fixo)
-- Estilo: Match com design premium
-- Funcionalidade: Limpa localStorage e redireciona
+- **Overlay**: Background rgba(0, 0, 0, 0.85)
+- **Container**: Max-width 600px, border-radius 12px
+- **Fechar**: Clique fora, tecla ESC, botão X (canto superior direito)
+- **Botões**: Cancelar (outline) e Gerar PDF (primary)
 
 ---
 
@@ -205,15 +225,19 @@ const STORAGE_CONFIG = {
 
 ```javascript
 // Autenticação
-POST /api/v1/auth/register  // Criar conta
-POST /api/v1/auth/login     // Login (retorna JWT)
+POST /api/v1/auth/register    // Criar conta
+POST /api/v1/auth/login       // Login (retorna JWT)
+GET  /api/v1/auth/me          // Dados do usuário autenticado
 
 // Geração de Planos
-POST /api/v1/sugestao       // Gerar plano personalizado
+POST /api/v1/sugestao         // Gerar plano personalizado
 Headers: { Authorization: 'Bearer <token>' }
+
+// Health Check
+GET  /health                  // Verificar disponibilidade da API
 ```
 
-### Formato de Requisição
+### Formato de Requisição (Solicitação de Plano)
 
 ```json
 {
@@ -221,10 +245,21 @@ Headers: { Authorization: 'Bearer <token>' }
   "peso": 80,
   "idade": 25,
   "altura": 175,
-  "disponibilidade_dias": 4,
-  "local_treino": "academia",
+  "disponibilidade": 4,
+  "local": "academia",
   "objetivo": "hipertrofia"
 }
+```
+
+### Tratamento de Erros
+
+```javascript
+// Códigos HTTP tratados
+401 → Sessão expirada (redireciona para login)
+400 → Dados inválidos
+404 → Recurso não encontrado
+409 → Email já cadastrado
+500 → Erro no servidor
 ```
 
 ---
@@ -232,10 +267,29 @@ Headers: { Authorization: 'Bearer <token>' }
 ## 🔐 Segurança
 
 ✅ **XSS Protection**: Sanitização de inputs  
-✅ **CSRF**: Token JWT em headers  
+✅ **CSRF**: Token JWT em headers Authorization  
 ✅ **HTTPS**: Recomendado para produção  
-✅ **Data Expiration**: Cache expira em 24h  
+✅ **Data Expiration**: Cache expira automaticamente em 24h  
+✅ **Data Validation**: Verificação de integridade via hash  
+✅ **Size Limits**: Limite de 800KB por item no localStorage  
 ✅ **No Sensitive Data**: Senhas não armazenadas no frontend  
+
+---
+
+## 📚 Scripts e Módulos
+
+| Script | Descrição |
+|--------|-----------|
+| `api.js` | Comunicação HTTP com backend, tratamento de erros |
+| `storage-manager.js` | Classe StorageManager para localStorage avançado |
+| `functions.js` | Funções utilitárias (logout, carregarLocalStorage, salvarLocalStorage) |
+| `validators.js` | Validações de formulários e inputs |
+| `login.js` | Lógica de autenticação e redirecionamento |
+| `cadastro.js` | Validação e envio do formulário de cadastro |
+| `solicitar-lista.js` | Validação do formulário de solicitação de treino |
+| `lista-page.js` | Renderização dinâmica da lista de exercícios |
+| `pdf-generator.js` | Geração de PDF com html2pdf.js (mobile-friendly) |
+| `home.js` | Animações e efeitos da página inicial |
 
 ---
 
@@ -244,6 +298,7 @@ Headers: { Authorization: 'Bearer <token>' }
 - [MDN Web Docs](https://developer.mozilla.org/)
 - [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 - [html2pdf.js](https://github.com/eKoopmans/html2pdf.js)
+- [html2canvas](https://html2canvas.hertzen.com/)
 - [CSS Grid & Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 
 ---
@@ -260,6 +315,7 @@ Headers: { Authorization: 'Bearer <token>' }
 - camelCase para JavaScript
 - kebab-case para CSS
 - 2 espaços de indentação
+- JSDoc para funções públicas
 - Comentários em funções complexas
 
 ---
@@ -272,8 +328,10 @@ Projeto acadêmico para fins educacionais.
 
 ## 👥 Autores
 
-- **João Victor Carvalho** - Backend & Frontend - [GitHub](https://github.com/joaokrv)
+- **João Victor Carvalho** - Backend & Frontend & DB - [GitHub](https://github.com/joaokrv)
 - **Guilherme Lustosa** - Frontend - [GitHub](https://github.com/devg-lustosa)
+- **André Toledo** - Frontend [Github](https://github.com/AndreToledoo)
+- **Marcelo Gutemberg** - Frontend
 
 ---
 
@@ -284,5 +342,5 @@ Para dúvidas ou problemas, abra uma **issue** no repositório.
 ---
 
 **Última atualização:** 27 de novembro de 2025  
-**Versão:** 2.0.0  
+**Versão:** 2.1.0  
 **Status:** ✅ Ativo

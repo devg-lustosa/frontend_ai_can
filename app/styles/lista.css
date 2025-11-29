@@ -1,6 +1,12 @@
-/* Variáveis globais */
+/* =========================================
+   RESET E VARIÁVEIS GLOBAIS
+   ========================================= */
 :root {
   --cor-texto: #008fcb;
+  --bg-container: #111;
+  --bg-body: #000;
+  --cor-branca: #fff;
+  --font-main: "Roboto", sans-serif;
 }
 
 * {
@@ -12,7 +18,7 @@
 /* Corpo da página */
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #000;
+  background-color: #050505;
   color: #fff;
   height: 100vh;
   overflow: hidden;
@@ -30,25 +36,18 @@ body {
   height: 100vh;
   object-fit: cover;
   z-index: -1;
-  opacity: 0.1;
-  filter: brightness(1.0);
+  opacity: 0.3;
+  filter: brightness(0.7);
 }
 
-.container {
-  width: 90%;
-  min-width: 550px;
-  max-width: 1300px;
-  background-color: #111;
-  border-radius: 16px;
-  padding: 19px 30px;
-  max-height: 85vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin: 0 auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  border: 1px solid #222;
+/* Ocultar vídeo no mobile */
+@media (max-width: 768px) {
+  .bg-video {
+    display: none;
+  }
 }
 
+/* Estilização da barra de rolagem */
 .container::-webkit-scrollbar {
   width: 8px;
 }
@@ -67,6 +66,29 @@ body {
 .container {
   scrollbar-width: thin;
   scrollbar-color: var(--cor-texto) #111;
+  position: relative;
+  z-index: 1;
+  width: 90%;
+  max-width: 1300px;
+  background-color: #111;
+  /* Ensure background is dark */
+  border-radius: 16px;
+  padding: 19px 30px;
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid #222;
+}
+
+/* Ajuste para monitores em modo retrato (Vertical) */
+@media (min-width: 768px) and (orientation: portrait) {
+  .container {
+    max-width: 90%;
+    max-height: 90vh;
+    margin-top: 0;
+  }
 }
 
 .form-box {
@@ -76,10 +98,13 @@ body {
   width: 100%;
 }
 
+/* =========================================
+   LOGO E CABEÇALHO
+   ========================================= */
 .logo-container {
   width: 100%;
   text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 1rem;
 }
 
 .logo {
@@ -87,25 +112,32 @@ body {
 }
 
 h2 {
-  margin-bottom: 22px;
+  margin-bottom: 1.5rem;
   text-align: center;
   width: 100%;
+  /* Fonte fluida: Mínimo 1.5rem, Ideal 4vw, Máximo 2rem */
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  color: var(--cor-branca);
 }
 
 h3 {
-  margin: 30px 0 15px;
+  margin: 2rem 0 1rem;
   text-align: left;
   width: 100%;
   border-bottom: 1px solid #333;
   padding-bottom: 5px;
 }
 
+/* =========================================
+   LOADING
+   ========================================= */
 .loading-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 2rem;
   width: 100%;
+  text-align: center;
 }
 
 .circular-loader {
@@ -115,7 +147,7 @@ h3 {
   border-top: 6px solid var(--cor-texto);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 @keyframes spin {
@@ -127,15 +159,18 @@ h3 {
 .loading-text {
   color: #fff;
   font-weight: 500;
-  margin-bottom: 25px;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  padding: 0 10px;
 }
 
 /* ===== SISTEMA DE BOTÕES PREMIUM ===== */
 button,
 .btn {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-main);
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
+  /* 8px */
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -198,20 +233,22 @@ button:not([class]):active {
 
 /* Botão PDF */
 .btn-pdf {
-  flex: 1;
-  padding: 12px 16px;
+  padding: 0.75rem 1.25rem;
   background-color: var(--cor-texto);
   color: #000;
-  font-weight: 600;
-  font-size: 14px;
+  font-size: 0.9rem;
+  flex: 1;
+  /* Distribui espaço igualmente */
 }
 
+.btn-voltar:hover,
 .btn-pdf:hover {
   background-color: #0278aa;
   transform: scale(1.05);
   box-shadow: 0 5px 15px rgba(0, 143, 203, 0.3);
 }
 
+.btn-voltar:active,
 .btn-pdf:active {
   transform: scale(0.98);
 }
@@ -259,11 +296,13 @@ button:not([class]):active {
   height: 18px;
 }
 
-/* Ações de loading */
 .loading-actions {
   display: none;
-  gap: 12px;
-  margin-top: 8px;
+  /* Controlado via JS */
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .loading-actions .btn-voltar,
@@ -277,32 +316,48 @@ button:not([class]):active {
 .treinos-scroll {
   display: flex;
   overflow-x: auto;
-  gap: 12px;
-  max-width: 100%;
-  box-sizing: border-box;
-  justify-content: center;
+  gap: 0.75rem;
   width: 100%;
+  padding-bottom: 10px;
+  /* Espaço para a scrollbar */
+
+  /* Alinhamento inicial à esquerda para scroll funcionar bem no mobile */
+  justify-content: flex-start;
+
+  /* Scroll suave */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Centraliza se couber tudo na tela (Desktop) */
+@media (min-width: 768px) {
+  .treinos-scroll {
+    justify-content: center;
+  }
 }
 
 .treino-card {
   min-width: 120px;
   max-width: 220px;
+  /* Limite máximo */
+  flex: 0 0 auto;
+  /* Impede que o card encolha */
+
   background-color: #1a1a1a;
   border: 2px solid var(--cor-texto);
   border-radius: 10px;
-  padding: 10px;
+  padding: 0.75rem;
   text-align: center;
   color: #fff;
   cursor: pointer;
-  flex-shrink: 0;
   font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .treino-card span {
   display: block;
-  font-size: 13px;
+  font-size: 0.8rem;
   color: #aaa;
-  margin-top: 4px;
+  margin-top: 0.25rem;
 }
 
 .treino-card:hover {

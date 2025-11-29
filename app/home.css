@@ -10,7 +10,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #000;
+  background-color: #050505;
   color: #fff;
   height: 100vh;
   display: flex;
@@ -29,6 +29,13 @@ body {
   z-index: -1;
   opacity: 0.1;
   filter: brightness(1.0);
+}
+
+/* Ocultar vídeo no mobile */
+@media (max-width: 768px) {
+  .bg-video {
+    display: none;
+  }
 }
 
 /* ===== GLOBAL ANIMATIONS ===== */

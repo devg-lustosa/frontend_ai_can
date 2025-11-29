@@ -4,7 +4,6 @@
 
 .auth-container {
     max-width: 600px;
-    /* Alinhado com solicitar-lista */
     width: 100%;
 }
 
@@ -13,7 +12,26 @@
     animation: fadeIn 0.6s ease-out;
 }
 
-/* Ensure container has premium look if used standalone (though it's inside home-container) */
+/* Dica de senha - aparece dinamicamente */
+.password-hint {
+    font-size: 12px;
+    color: #aaa;
+    margin: -10px 0 15px 0;
+    padding: 8px 12px;
+    background: rgba(0, 143, 203, 0.1);
+    border-left: 3px solid var(--cor-texto);
+    border-radius: 4px;
+    line-height: 1.4;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.password-hint.hidden {
+    display: none;
+}
+
+/* Ensure container has premium look */
 .home-container {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     border: 1px solid #222;
