@@ -720,3 +720,111 @@ button:not([class]):active {
     width: 100%;
   }
 }
+
+/* =========================================
+   SISTEMA DE FEEDBACK (LIKE/DISLIKE)
+   ========================================= */
+.feedback-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.feedback-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background-color: #222;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.feedback-btn:hover {
+  background-color: #333;
+  transform: scale(1.1);
+}
+
+.feedback-btn svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Botão Like (para cima) */
+.feedback-like {
+  border-color: transparent;
+}
+
+.feedback-like:hover {
+  color: #4caf50;
+  border-color: #4caf50;
+}
+
+.feedback-like.ativo {
+  background-color: #4caf50;
+  color: #fff;
+  border-color: #4caf50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+}
+
+.feedback-like.ativo:hover {
+  background-color: #45a049;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.6);
+}
+
+/* Botão Dislike (para baixo) */
+.feedback-dislike {
+  border-color: transparent;
+}
+
+.feedback-dislike:hover {
+  color: #f44336;
+  border-color: #f44336;
+}
+
+.feedback-dislike.ativo {
+  background-color: #f44336;
+  color: #fff;
+  border-color: #f44336;
+  box-shadow: 0 0 10px rgba(244, 67, 54, 0.4);
+}
+
+.feedback-dislike.ativo:hover {
+  background-color: #da190b;
+  box-shadow: 0 0 15px rgba(244, 67, 54, 0.6);
+}
+
+/* Toast de notificação */
+.toast {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.toast-sucesso {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.toast-erro {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.toast-info {
+  background-color: #008fcb;
+  color: #fff;
+}

@@ -64,6 +64,7 @@ frontend/
         ├── functions.js           # Funções globais (logout, localStorage helpers)
         ├── validators.js          # Validações de formulários
         ├── storage-manager.js     # Classe StorageManager (localStorage avançado)
+        ├── feedback.js            # Sistema de like/dislike para exercícios e refeições
         ├── home.js                # Animações da landing page
         ├── login.js               # Lógica de autenticação
         ├── cadastro.js            # Lógica de registro
@@ -149,6 +150,8 @@ python -m http.server 5500
 - **Navegação por dias** de treino (cards clicáveis)
 - **Detalhes de exercícios**: nome, séries, reps, descanso, vídeo
 - **Sugestões nutricionais**: pré e pós-treino (opções econômica, equilibrada e premium)
+- **Sistema de Feedback**: Like/Dislike para exercícios e refeições (gema para cima/baixo)
+- **Personalização**: Próximos planos gerados evitam itens com dislike
 - **Botão "Refazer Lista"** que limpa cache e retorna ao formulário
 
 ### 📄 **Geração de PDF**
@@ -233,6 +236,11 @@ GET  /api/v1/auth/me          // Dados do usuário autenticado
 POST /api/v1/sugestao         // Gerar plano personalizado
 Headers: { Authorization: 'Bearer <token>' }
 
+// Feedback (Like/Dislike)
+POST /api/v1/feedback/exercicio  // Avaliar exercício
+POST /api/v1/feedback/refeicao   // Avaliar refeição
+GET  /api/v1/feedback/me         // Listar preferências do usuário
+
 // Health Check
 GET  /health                  // Verificar disponibilidade da API
 ```
@@ -272,6 +280,7 @@ GET  /health                  // Verificar disponibilidade da API
 ✅ **Data Expiration**: Cache expira automaticamente em 24h  
 ✅ **Data Validation**: Verificação de integridade via hash  
 ✅ **Size Limits**: Limite de 800KB por item no localStorage  
+✅ **Feedback Validation**: Debounce (1s) bloqueia múltiplos cliques  
 ✅ **No Sensitive Data**: Senhas não armazenadas no frontend  
 
 ---
@@ -287,8 +296,9 @@ GET  /health                  // Verificar disponibilidade da API
 | `login.js` | Lógica de autenticação e redirecionamento |
 | `cadastro.js` | Validação e envio do formulário de cadastro |
 | `solicitar-lista.js` | Validação do formulário de solicitação de treino |
-| `lista-page.js` | Renderização dinâmica da lista de exercícios |
+| `lista-page.js` | Renderização dinâmica da lista de exercícios com feedback |
 | `pdf-generator.js` | Geração de PDF com html2pdf.js (mobile-friendly) |
+| `feedback.js` | Sistema de like/dislike (gema para cima/baixo) com integração API |
 | `home.js` | Animações e efeitos da página inicial |
 
 ---
@@ -341,6 +351,6 @@ Para dúvidas ou problemas, abra uma **issue** no repositório.
 
 ---
 
-**Última atualização:** 27 de novembro de 2025  
-**Versão:** 2.1.0  
+**Última atualização:** 1 de dezembro de 2025  
+**Versão:** 2.2.0  
 **Status:** ✅ Ativo

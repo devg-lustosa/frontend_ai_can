@@ -247,13 +247,27 @@ function mostrarLista(plano) {
   preBloco.appendChild(preBlocoTitleDiv);
 
   if (plano.sugestoes_nutricionais.pre_treino) {
-    Object.values(plano.sugestoes_nutricionais.pre_treino).forEach((r) => {
+    Object.entries(plano.sugestoes_nutricionais.pre_treino).forEach(([key, r], index) => {
       const card = document.createElement('div');
       card.classList.add('receita-card');
 
+      const headerReceita = document.createElement('div');
+      headerReceita.style.cssText = 'display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px;';
+
       const h4 = document.createElement('h4');
+      h4.style.margin = '0';
       h4.textContent = r.nome;
-      card.appendChild(h4);
+
+      const feedbackElementId = `feedback-pre-${index}`;
+      const botoesLikeDislike = criarBotoesLikeDislike(
+        'refeicao',
+        r.nome,
+        feedbackElementId
+      );
+
+      headerReceita.appendChild(h4);
+      headerReceita.appendChild(botoesLikeDislike);
+      card.appendChild(headerReceita);
 
       const ul = document.createElement('ul');
       r.ingredientes.forEach(ing => {
@@ -288,13 +302,27 @@ function mostrarLista(plano) {
   posBloco.appendChild(posBlocoTitleDiv);
 
   if (plano.sugestoes_nutricionais.pos_treino) {
-    Object.values(plano.sugestoes_nutricionais.pos_treino).forEach((r) => {
+    Object.entries(plano.sugestoes_nutricionais.pos_treino).forEach(([key, r], index) => {
       const card = document.createElement('div');
       card.classList.add('receita-card');
 
+      const headerReceita = document.createElement('div');
+      headerReceita.style.cssText = 'display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px;';
+
       const h4 = document.createElement('h4');
+      h4.style.margin = '0';
       h4.textContent = r.nome;
-      card.appendChild(h4);
+
+      const feedbackElementId = `feedback-pos-${index}`;
+      const botoesLikeDislike = criarBotoesLikeDislike(
+        'refeicao',
+        r.nome,
+        feedbackElementId
+      );
+
+      headerReceita.appendChild(h4);
+      headerReceita.appendChild(botoesLikeDislike);
+      card.appendChild(headerReceita);
 
       const ul = document.createElement('ul');
       r.ingredientes.forEach(ing => {
@@ -335,13 +363,26 @@ function mostrarDetalhesDay(index, dias) {
   detalhesDiv.appendChild(h3);
 
   if (treino.exercicios && treino.exercicios.length > 0) {
-    treino.exercicios.forEach((ex) => {
+    treino.exercicios.forEach((ex, exIndex) => {
       const exDiv = document.createElement('div');
       exDiv.classList.add('exercicio');
 
+      const headerEx = document.createElement('div');
+      headerEx.style.cssText = 'display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px;';
+
       const strong = document.createElement('strong');
       strong.textContent = ex.nome;
-      exDiv.appendChild(strong);
+
+      const feedbackElementId = `feedback-ex-${index}-${exIndex}`;
+      const botoesLikeDislike = criarBotoesLikeDislike(
+        'exercicio',
+        ex.nome,
+        feedbackElementId
+      );
+
+      headerEx.appendChild(strong);
+      headerEx.appendChild(botoesLikeDislike);
+      exDiv.appendChild(headerEx);
 
       const infoText = document.createTextNode(` Séries: ${ex.series} | Repetições: ${ex.repeticoes} | Descanso: ${ex.descanso_segundos}s`);
       exDiv.appendChild(infoText);
