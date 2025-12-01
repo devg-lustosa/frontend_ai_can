@@ -32,6 +32,56 @@ function obterFeedbackItem(tipo, nomeItem) {
   return feedbacks[tipo]?.[nomeItem] ?? null;
 }
 
+async function sincronizarFeedbacksComBackend() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.warn('Token não encontrado, sincronização cancelada');
+    return false;
+  }
+
+  try {
+    const response = await fetch(`${FEEDBACK_CONFIG.API_ENDPOINT}/me`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        console.warn('Token expirado, sincronização cancelada');
+        return false;
+      }
+      throw new Error('Erro ao buscar feedbacks do servidor');
+    }
+
+    const preferencias = await response.json();
+    const feedbacksBackend = { exercicio: {}, refeicao: {} };
+
+    preferencias.exercicios.gostou.forEach(item => {
+      feedbacksBackend.exercicio[item] = true;
+    });
+    preferencias.exercicios.nao_gostou.forEach(item => {
+      feedbacksBackend.exercicio[item] = false;
+    });
+
+    preferencias.refeicoes.gostou.forEach(item => {
+      feedbacksBackend.refeicao[item] = true;
+    });
+    preferencias.refeicoes.nao_gostou.forEach(item => {
+      feedbacksBackend.refeicao[item] = false;
+    });
+
+    salvarFeedbacksLocais(feedbacksBackend);
+    console.log('Feedbacks sincronizados com sucesso');
+    return true;
+
+  } catch (error) {
+    console.error('Erro ao sincronizar feedbacks:', error);
+    return false;
+  }
+}
+
 async function enviarFeedbackAPI(tipo, nomeItem, gostou) {
   const token = localStorage.getItem('token');
   if (!token) {
@@ -136,6 +186,7 @@ async function salvarFeedback(tipo, nomeItem, gostou, elementId = null) {
   try {
     const feedbacks = carregarFeedbacksLocais();
     feedbacks[tipo] = feedbacks[tipo] || {};
+    const feedbackAnterior = feedbacks[tipo][nomeItem];
     feedbacks[tipo][nomeItem] = gostou;
     salvarFeedbacksLocais(feedbacks);
 
@@ -143,10 +194,12 @@ async function salvarFeedback(tipo, nomeItem, gostou, elementId = null) {
       atualizarEstadoBotoes(elementId, tipo, nomeItem);
     }
 
-    enviarFeedbackAPI(tipo, nomeItem, gostou).catch(error => {
-      console.error('Erro ao enviar:', error);
-      mostrarToastFeedback('Erro ao salvar feedback', 'erro');
-    });
+    if (feedbackAnterior !== gostou) {
+      enviarFeedbackAPI(tipo, nomeItem, gostou).catch(error => {
+        console.error('Erro ao enviar:', error);
+        mostrarToastFeedback('Erro ao salvar feedback', 'erro');
+      });
+    }
 
     mostrarToastFeedback('Feedback registrado', 'sucesso');
 

@@ -191,6 +191,12 @@ function mostrarLista(plano) {
   if (loading) loading.style.display = 'none';
   if (conteudoLista) conteudoLista.style.display = 'block';
 
+  if (typeof sincronizarFeedbacksComBackend === 'function') {
+    sincronizarFeedbacksComBackend().catch(err => {
+      console.warn('Erro ao sincronizar feedbacks:', err);
+    });
+  }
+
   const titulo = document.getElementById('tituloLista');
   if (titulo) titulo.textContent = plano.nome_da_rotina;
 
